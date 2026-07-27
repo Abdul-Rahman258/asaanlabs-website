@@ -69,17 +69,16 @@ export default function Home() {
         transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.5 }}
         className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-xl border-b border-white/5"
       >
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Image src="/AsaanLabsLogoOnly.svg" alt="Asaan Labs Logo" width={40} height={40} className="rounded-md shadow-lg shadow-primary/20" />
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative">
+          <div className="flex items-center gap-3 relative z-10">
+            <Image src="/AsaanLabsLogoOnly.svg" alt="Asaan Labs Logo" width={40} height={40} className="rounded-md" />
             <span className="text-xl font-black tracking-widest text-foreground">
               ASAAN <span className="font-light text-slate-400">LABS</span>
             </span>
           </div>
-          <div className="hidden md:flex gap-8 text-sm font-medium text-slate-300">
+          <div className="hidden md:flex gap-8 text-sm font-medium text-slate-300 absolute left-1/2 -translate-x-1/2 z-0">
             <a href="#services" className="hover:text-primary transition-colors">Services</a>
             <a href="#about" className="hover:text-primary transition-colors">About</a>
-            <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
           </div>
           <motion.a 
             whileHover={{ scale: 1.05 }}
@@ -140,14 +139,14 @@ export default function Home() {
         </motion.section>
 
         {/* Services Section */}
-        <section id="services" className="py-40 relative z-10 bg-transparent border-y border-white/5">
+        <section id="services" className="py-20 md:py-40 relative z-10 bg-transparent border-y border-white/5">
           <div className="max-w-7xl mx-auto px-6">
             <motion.div 
               variants={staggerContainer}
               initial="hidden"
               whileInView="show"
               viewport={{ once: false, margin: "-100px" }}
-              className="text-center mb-24 relative z-20"
+              className="text-center mb-12 md:mb-24 relative z-20"
             >
               <motion.h2 variants={textReveal} className="text-4xl md:text-6xl font-extrabold mb-6 drop-shadow-xl">
                 Intelligent <span className="text-primary">Solutions</span>
@@ -190,8 +189,30 @@ export default function Home() {
           </div>
         </section>
 
+        {/* About Section */}
+        <section id="about" className="py-20 md:py-40 relative z-10 bg-transparent">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative z-20"
+            >
+              <motion.h2 variants={textReveal} className="text-4xl md:text-5xl font-extrabold mb-8 drop-shadow-xl text-white">
+                About <span className="text-primary">Us</span>
+              </motion.h2>
+              <motion.p variants={textReveal} className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed drop-shadow-lg text-left md:text-center">
+                Asaan Labs was founded by <strong className="text-white">Abdul Rahman</strong> with a simple yet powerful mission: to make life easier by harnessing the true potential of Artificial Intelligence. 
+                <br /><br />
+                We believe that complex AI shouldn't be complicated to use. Our goal is to empower individuals and businesses by building seamless, intelligent solutions that automate tedious workflows, solve complex problems, and ultimately give you your time back.
+              </motion.p>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Contact CTA */}
-        <section id="contact" className="py-40 relative z-10 overflow-visible">
+        <section id="contact" className="py-20 md:py-40 relative z-10 overflow-visible">
           <div className="max-w-5xl mx-auto px-6 relative">
             
             <motion.div 
