@@ -189,28 +189,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section id="about" className="py-20 md:py-40 relative z-10 bg-transparent">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <motion.div 
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-100px" }}
-              className="relative z-20"
-            >
-              <motion.h2 variants={textReveal} className="text-4xl md:text-5xl font-extrabold mb-8 drop-shadow-xl text-white">
-                About <span className="text-primary">Us</span>
-              </motion.h2>
-              <motion.p variants={textReveal} className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed drop-shadow-lg text-left md:text-center">
-                Asaan Labs was founded by <strong className="text-white">Abdul Rahman</strong> with a simple yet powerful mission: to make life easier by harnessing the true potential of Artificial Intelligence. 
-                <br /><br />
-                We believe that complex AI shouldn't be complicated to use. Our goal is to empower individuals and businesses by building seamless, intelligent solutions that automate tedious workflows, solve complex problems, and ultimately give you your time back.
-              </motion.p>
-            </motion.div>
-          </div>
-        </section>
-
         {/* Contact CTA */}
         <section id="contact" className="py-20 md:py-40 relative z-10 overflow-visible">
           <div className="max-w-5xl mx-auto px-6 relative">
@@ -267,6 +245,28 @@ export default function Home() {
                    Send Message
                  </motion.button>
                </motion.form>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section id="about" className="py-20 md:py-40 relative z-10 bg-transparent">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative z-20"
+            >
+              <motion.h2 variants={textReveal} className="text-4xl md:text-5xl font-extrabold mb-8 drop-shadow-xl text-white">
+                About <span className="text-primary">Us</span>
+              </motion.h2>
+              <motion.p variants={textReveal} className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed drop-shadow-lg text-left md:text-center">
+                Asaan Labs was founded by <a href="https://www.linkedin.com/in/devarbaig" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors font-bold underline decoration-primary/30 underline-offset-4">Abdul Rahman Baig</a> with a simple yet powerful mission: to make life easier by harnessing the true potential of Artificial Intelligence. 
+                <br /><br />
+                We believe that complex AI shouldn't be complicated to use. Our goal is to empower individuals and businesses by building seamless, intelligent solutions that automate tedious workflows, solve complex problems, and ultimately give you your time back.
+              </motion.p>
             </motion.div>
           </div>
         </section>
