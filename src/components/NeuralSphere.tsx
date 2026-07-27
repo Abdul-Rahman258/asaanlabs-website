@@ -70,22 +70,24 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       // Scroll-driven math
       const scroll = scrollRef.current;
       
-      // Base radius
-      let currentRadius = 120;
+      // Responsive dynamic base radius calculation
+      const screenMin = Math.min(width, height);
+      const isMobile = width < 768;
+      const baseRadius = isMobile ? screenMin * 0.3 : 120;
+      const maxExtraRadius = isMobile ? screenMin * 0.8 : 480;
       
-      // As scroll approaches 0.4 (Services section), sphere radius expands massively
-      // At 0.4, we want the camera to be practically inside or right at the edge of the sphere
+      let currentRadius = baseRadius;
+      
+      // Expand sphere towards camera when scrolling to Services section
       if (scroll > 0.1 && scroll <= 0.6) {
-        // Interpolate radius up to ~600
         const progress = (scroll - 0.1) / 0.3; // peaks around 0.4
         const multiplier = progress < 1 ? progress : 1 - ((scroll - 0.4) / 0.2); 
-        // multiplier peaks at 1 when scroll is 0.4
-        currentRadius = 120 + Math.max(0, multiplier * 480);
+        currentRadius = baseRadius + Math.max(0, multiplier * maxExtraRadius);
       }
       
-      // At contact section (0.8+), it shrinks slightly below base
+      // Shrink and move left for Contact section
       if (scroll > 0.7) {
-         currentRadius = 100;
+         currentRadius = baseRadius * 0.8;
       }
 
       // Camera Z distance (how far the "eye" is from the center of the sphere)

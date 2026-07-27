@@ -176,7 +176,7 @@ export default function Home() {
                   key={i} 
                   variants={cardVariant}
                   whileHover={{ scale: 1.05, y: -10, borderColor: "rgba(39,176,166,0.5)" }}
-                  className="p-10 rounded-[2.5rem] bg-[#0a0f1c]/80 backdrop-blur-xl border border-white/10 transition-colors group relative overflow-hidden shadow-2xl"
+                  className="p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-[#0a0f1c]/80 backdrop-blur-xl border border-white/10 transition-colors group relative overflow-hidden shadow-2xl"
                 >
                   <div className="absolute top-[-50px] right-[-50px] w-48 h-48 bg-[radial-gradient(circle,rgba(39,176,166,0.15)_0%,transparent_70%)] group-hover:bg-[radial-gradient(circle,rgba(39,176,166,0.3)_0%,transparent_70%)] transition-colors pointer-events-none" />
                   <div className="w-16 h-16 rounded-2xl bg-[#101a2f] border border-primary/30 text-primary flex items-center justify-center mb-8 shadow-[0_0_20px_rgba(39,176,166,0.2)]">
@@ -199,7 +199,7 @@ export default function Home() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: false, margin: "-100px" }}
-              className="p-16 rounded-[3rem] bg-gradient-to-br from-[#101a2f]/90 to-[#1a2f4c]/90 backdrop-blur-2xl border border-primary/20 text-center relative overflow-hidden shadow-[0_0_80px_rgba(16,26,47,0.9)] ml-auto lg:w-2/3"
+              className="p-8 md:p-16 rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-[#101a2f]/90 to-[#1a2f4c]/90 backdrop-blur-2xl border border-primary/20 text-center relative overflow-hidden shadow-[0_0_80px_rgba(16,26,47,0.9)] ml-auto lg:w-2/3"
             >
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(39,176,166,0.08)_0%,transparent_70%)] pointer-events-none" />
                <motion.h2 variants={textReveal} className="text-4xl md:text-5xl font-extrabold mb-8 text-white relative z-10">
