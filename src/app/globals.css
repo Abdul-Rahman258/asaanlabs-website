@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #101a2f;
+  --background: #0b1120; /* Very Dark Navy */
+  --foreground: #f8fafc;
   --primary: #27b0a6; /* Sea Green */
   --secondary: #1a2f4c; /* Dark Navy */
 }
@@ -14,13 +14,6 @@
   --color-secondary: var(--secondary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0b1120; /* Very Dark Navy */
-    --foreground: #f8fafc;
-  }
 }
 
 body {
