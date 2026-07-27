@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { ArrowRight, Bot, Cpu, LineChart, Mail, Sparkles, Smartphone, Globe, MonitorSmartphone } from "lucide-react";
 import Image from "next/image";
 import NeuralBackground from "../components/NeuralBackground";
@@ -9,7 +9,7 @@ import NeuralSphere from "../components/NeuralSphere";
 import FloatingContact from "../components/FloatingContact";
 
 // Animation Variants
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -17,12 +17,12 @@ const staggerContainer = {
   }
 };
 
-const textReveal = {
+const textReveal: Variants = {
   hidden: { opacity: 0, y: 50, rotateX: -45 },
   show: { opacity: 1, y: 0, rotateX: 0, transition: { type: "spring", stiffness: 100, damping: 20 } }
 };
 
-const cardVariant = {
+const cardVariant: Variants = {
   hidden: { opacity: 0, scale: 0.8, y: 50 },
   show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
 };
