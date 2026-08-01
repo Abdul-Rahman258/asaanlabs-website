@@ -72,8 +72,18 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   // Sphere transformations
-  const sphereX = useTransform(scrollYProgress, [0, 0.3, 0.55, 0.9, 1], ["25vw", "25vw", "0vw", "0vw", "-35vw"]);
-  const sphereScale = useTransform(scrollYProgress, [0, 0.3, 0.55, 0.9, 1], [1, 1, 5, 5, 0.8]);
+  const sphereX = useTransform(scrollYProgress, 
+    [0, 0.3, 0.55, 0.9, 0.93, 0.96, 1], 
+    ["25vw", "25vw", "0vw", "0vw", "-10vw", "-25vw", "-35vw"]
+  );
+  const sphereY = useTransform(scrollYProgress, 
+    [0, 0.9, 0.93, 0.96, 1], 
+    ["-50%", "-50%", "-40%", "-35%", "-50%"]
+  );
+  const sphereScale = useTransform(scrollYProgress, 
+    [0, 0.3, 0.55, 0.9, 0.93, 0.96, 1], 
+    [1, 1, 5, 5, 3.5, 2, 0.8]
+  );
   const sphereGlowOpacity = useTransform(scrollYProgress, [0, 0.55, 0.9, 1], [0, 0, 1, 1]);
 
   return (
@@ -82,7 +92,7 @@ export default function Home() {
 
       {/* Fixed Global Neural Sphere */}
       <motion.div 
-        style={{ x: sphereX, y: "-50%" }}
+        style={{ x: sphereX, y: sphereY }}
         className="fixed top-1/2 left-0 w-[100vw] h-[100vh] z-0 pointer-events-none hidden lg:block"
       >
         <div className="absolute inset-0 flex items-center justify-center">
