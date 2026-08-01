@@ -72,7 +72,7 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   // Sphere transformations
-  const sphereX = useTransform(scrollYProgress, [0, 0.3, 0.55, 0.9, 1], ["25vw", "25vw", "0vw", "0vw", "35vw"]);
+  const sphereX = useTransform(scrollYProgress, [0, 0.3, 0.55, 0.9, 1], ["25vw", "25vw", "0vw", "0vw", "-35vw"]);
   const sphereScale = useTransform(scrollYProgress, [0, 0.3, 0.55, 0.9, 1], [1, 1, 5, 5, 0.8]);
   const sphereGlowOpacity = useTransform(scrollYProgress, [0, 0.55, 0.9, 1], [0, 0, 1, 1]);
 
