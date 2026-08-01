@@ -35,17 +35,32 @@ export default function Home() {
     {
       title: "AI & Machine Learning",
       desc: "Developing intelligent, agentic AI solutions, generative models, and computer vision systems to solve complex problems and automate workflows.",
-      icon: Brain
+      icon: Brain,
+      tiles: [
+        { label: "Agentic Workflows", icon: Bot },
+        { label: "Custom LLM Integration", icon: Cpu },
+        { label: "Predictive Analytics", icon: LineChart }
+      ]
     },
     {
       title: "Data Science",
       desc: "Extracting actionable insights from raw data using advanced predictive modeling, data visualization, and statistical analysis.",
-      icon: LineChart
+      icon: LineChart,
+      tiles: [
+        { label: "Big Data Processing", icon: Globe },
+        { label: "Data Visualization", icon: LayoutTemplate },
+        { label: "Statistical Modeling", icon: Sparkles }
+      ]
     },
     {
       title: "Web & Product Design",
       desc: "Crafting intuitive, responsive user interfaces and full-stack web applications that prioritize user experience and performance.",
-      icon: LayoutTemplate
+      icon: LayoutTemplate,
+      tiles: [
+        { label: "Web AI Tools", icon: Globe },
+        { label: "Android AI Apps", icon: Smartphone },
+        { label: "Desktop AI Software", icon: MonitorSmartphone }
+      ]
     }
   ];
 
@@ -236,12 +251,24 @@ export default function Home() {
                       );
                     })()}
                     
-                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 drop-shadow-md">
+                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-md">
                       {servicesList[currentServiceIndex].title}
                     </h3>
-                    <p className="text-slate-300 leading-relaxed font-light text-lg md:text-xl">
+                    <p className="text-slate-300 leading-relaxed font-light text-base md:text-lg mb-8">
                       {servicesList[currentServiceIndex].desc}
                     </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      {servicesList[currentServiceIndex].tiles.map((tile, i) => {
+                        const TileIcon = tile.icon;
+                        return (
+                          <div key={i} className="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors shadow-inner">
+                            <TileIcon className="w-8 h-8 text-primary mb-3 drop-shadow-sm" />
+                            <span className="text-sm md:text-base font-semibold text-slate-200 text-center">{tile.label}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </motion.div>
                 </AnimatePresence>
               </div>
