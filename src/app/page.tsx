@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
-import { ArrowRight, Bot, Cpu, LineChart, Mail, Sparkles, Smartphone, Globe, MonitorSmartphone } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, Variants, AnimatePresence } from "framer-motion";
+import { ArrowRight, Bot, Cpu, LineChart, Mail, Sparkles, Smartphone, Globe, MonitorSmartphone, Brain, LayoutTemplate, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import NeuralBackground from "../components/NeuralBackground";
 import NeuralSphere from "../components/NeuralSphere";
@@ -29,6 +29,28 @@ const cardVariant: Variants = {
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+
+  const servicesList = [
+    {
+      title: "AI & Machine Learning",
+      desc: "Developing intelligent, agentic AI solutions, generative models, and computer vision systems to solve complex problems and automate workflows.",
+      icon: Brain
+    },
+    {
+      title: "Data Science",
+      desc: "Extracting actionable insights from raw data using advanced predictive modeling, data visualization, and statistical analysis.",
+      icon: LineChart
+    },
+    {
+      title: "Web & Product Design",
+      desc: "Crafting intuitive, responsive user interfaces and full-stack web applications that prioritize user experience and performance.",
+      icon: LayoutTemplate
+    }
+  ];
+
+  const nextService = () => setCurrentServiceIndex((prev) => (prev + 1) % servicesList.length);
+  const prevService = () => setCurrentServiceIndex((prev) => (prev - 1 + servicesList.length) % servicesList.length);
   
   // Hero text fading out
   const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
@@ -95,7 +117,7 @@ export default function Home() {
         {/* Hero Section */}
         <motion.section 
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative pt-20 pb-32 min-h-[80vh] flex items-center"
+          className="relative pt-20 pb-16 md:pb-32 min-h-[80vh] flex items-center"
         >
           <div className="max-w-7xl mx-auto px-6 w-full">
             <motion.div variants={staggerContainer} initial="hidden" animate="show" className="max-w-2xl">
@@ -138,15 +160,37 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* Services Section */}
-        <section id="services" className="py-20 md:py-40 relative z-10 bg-transparent border-y border-white/5">
+        {/* About Section - MOVED TO TOP */}
+        <section id="about" className="py-20 md:py-32 relative z-10 bg-transparent border-t border-white/5">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative z-20"
+            >
+              <motion.h2 variants={textReveal} className="text-4xl md:text-5xl font-extrabold mb-8 drop-shadow-xl text-white">
+                About <span className="text-primary">Us</span>
+              </motion.h2>
+              <motion.p variants={textReveal} className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed drop-shadow-lg text-left md:text-center">
+                Asaan Labs was founded by <a href="https://www.linkedin.com/in/devarbaig" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors font-bold underline decoration-primary/30 underline-offset-4">Abdul Rahman Baig</a> with a simple yet powerful mission: to make life easier by harnessing the true potential of Artificial Intelligence. 
+                <br /><br />
+                We believe that complex AI shouldn't be complicated to use. Our goal is to empower individuals and businesses by building seamless, intelligent solutions that automate tedious workflows, solve complex problems, and ultimately give you your time back.
+              </motion.p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Services Section - CAROUSEL */}
+        <section id="services" className="py-20 md:py-32 relative z-10 bg-transparent border-y border-white/5">
           <div className="max-w-7xl mx-auto px-6">
             <motion.div 
               variants={staggerContainer}
               initial="hidden"
               whileInView="show"
               viewport={{ once: false, margin: "-100px" }}
-              className="text-center mb-12 md:mb-24 relative z-20"
+              className="text-center mb-12 relative z-20"
             >
               <motion.h2 variants={textReveal} className="text-4xl md:text-6xl font-extrabold mb-6 drop-shadow-xl">
                 Intelligent <span className="text-primary">Solutions</span>
@@ -160,37 +204,83 @@ export default function Home() {
               variants={staggerContainer}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, margin: "-100px" }}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-20"
+              viewport={{ once: true, margin: "-50px" }}
+              className="relative max-w-5xl mx-auto flex items-center justify-center min-h-[450px]"
             >
-              {[
-                { icon: Smartphone, title: "Android AI Apps", desc: "Native, high-performance Android applications powered by on-device ML models and cloud AI APIs." },
-                { icon: Globe, title: "Web AI Tools", desc: "Scalable web applications seamlessly integrating large language models, computer vision, and dynamic data streams." },
-                { icon: MonitorSmartphone, title: "Desktop AI Software", desc: "Robust cross-platform desktop solutions for heavy localized AI workloads and enterprise automation." },
-                { icon: Bot, title: "Agentic Workflows", desc: "Autonomous AI systems that reason, plan, and execute multi-step tasks across your existing infrastructure." },
-                { icon: Cpu, title: "Custom LLM Integration", desc: "Fine-tuned language models deployed securely within your VPC to analyze proprietary data without leaks." },
-                { icon: LineChart, title: "Predictive Analytics", desc: "Advanced forecasting engines utilizing structured and unstructured data to drive proactive business decisions." }
-              ].map((service, i) => (
-                <motion.div 
-                  key={i} 
-                  variants={cardVariant}
-                  whileHover={{ scale: 1.05, y: -10, borderColor: "rgba(39,176,166,0.5)" }}
-                  className="p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-[#0a0f1c]/80 backdrop-blur-xl border border-white/10 transition-colors group relative overflow-hidden shadow-2xl"
-                >
-                  <div className="absolute top-[-50px] right-[-50px] w-48 h-48 bg-[radial-gradient(circle,rgba(39,176,166,0.15)_0%,transparent_70%)] group-hover:bg-[radial-gradient(circle,rgba(39,176,166,0.3)_0%,transparent_70%)] transition-colors pointer-events-none" />
-                  <div className="w-16 h-16 rounded-2xl bg-[#101a2f] border border-primary/30 text-primary flex items-center justify-center mb-8 shadow-[0_0_20px_rgba(39,176,166,0.2)]">
-                    <service.icon className="w-8 h-8" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-100 mb-4">{service.title}</h3>
-                  <p className="text-slate-300 text-lg leading-relaxed">{service.desc}</p>
-                </motion.div>
-              ))}
+              {/* Desktop Nav Left */}
+              <button 
+                onClick={prevService}
+                className="absolute left-0 md:-left-16 z-30 p-4 rounded-full bg-[#101a2f]/80 border border-primary/30 text-primary hover:bg-primary/20 hover:text-white transition-all backdrop-blur-md hidden sm:flex shadow-[0_0_20px_rgba(39,176,166,0.15)]"
+              >
+                <ChevronLeft className="w-8 h-8" />
+              </button>
+
+              <div className="w-full h-full relative flex items-center justify-center overflow-visible px-4">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentServiceIndex}
+                    initial={{ opacity: 0, x: 100, scale: 0.9 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -100, scale: 0.9 }}
+                    transition={{ duration: 0.5, type: "spring", stiffness: 100, damping: 20 }}
+                    className="w-full max-w-2xl p-10 md:p-14 rounded-[2.5rem] bg-[#0a0f1c]/80 backdrop-blur-xl border border-white/10 shadow-[0_15px_50px_rgba(0,0,0,0.5)] text-center relative group"
+                  >
+                    <div className="absolute top-[-50px] right-[-50px] w-48 h-48 bg-[radial-gradient(circle,rgba(39,176,166,0.15)_0%,transparent_70%)] transition-colors pointer-events-none" />
+                    
+                    {(() => {
+                      const IconComp = servicesList[currentServiceIndex].icon;
+                      return (
+                        <div className="mx-auto w-24 h-24 md:w-28 md:h-28 flex items-center justify-center rounded-3xl bg-[#101a2f] border border-primary/30 text-primary mb-8 shadow-[0_0_30px_rgba(39,176,166,0.2)]">
+                          <IconComp className="w-12 h-12 md:w-14 md:h-14" />
+                        </div>
+                      );
+                    })()}
+                    
+                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 drop-shadow-md">
+                      {servicesList[currentServiceIndex].title}
+                    </h3>
+                    <p className="text-slate-300 leading-relaxed font-light text-lg md:text-xl">
+                      {servicesList[currentServiceIndex].desc}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Desktop Nav Right */}
+              <button 
+                onClick={nextService}
+                className="absolute right-0 md:-right-16 z-30 p-4 rounded-full bg-[#101a2f]/80 border border-primary/30 text-primary hover:bg-primary/20 hover:text-white transition-all backdrop-blur-md hidden sm:flex shadow-[0_0_20px_rgba(39,176,166,0.15)]"
+              >
+                <ChevronRight className="w-8 h-8" />
+              </button>
             </motion.div>
+
+            {/* Mobile controls & Dots */}
+            <div className="flex justify-center items-center gap-6 mt-12 relative z-30">
+              <button onClick={prevService} className="p-3 sm:hidden text-primary bg-[#101a2f]/80 rounded-full border border-primary/30">
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <div className="flex gap-3">
+                {servicesList.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentServiceIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentServiceIndex ? "bg-primary w-10 shadow-[0_0_10px_rgba(39,176,166,0.6)]" : "bg-primary/30 hover:bg-primary/50"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <button onClick={nextService} className="p-3 sm:hidden text-primary bg-[#101a2f]/80 rounded-full border border-primary/30">
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
           </div>
         </section>
 
         {/* Contact CTA */}
-        <section id="contact" className="py-20 md:py-40 relative z-10 overflow-visible">
+        <section id="contact" className="py-20 md:py-32 relative z-10 overflow-visible">
           <div className="max-w-5xl mx-auto px-6 relative">
             
             <motion.div 
@@ -249,27 +339,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section id="about" className="py-20 md:py-40 relative z-10 bg-transparent">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <motion.div 
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-100px" }}
-              className="relative z-20"
-            >
-              <motion.h2 variants={textReveal} className="text-4xl md:text-5xl font-extrabold mb-8 drop-shadow-xl text-white">
-                About <span className="text-primary">Us</span>
-              </motion.h2>
-              <motion.p variants={textReveal} className="text-slate-300 text-lg md:text-xl font-medium leading-relaxed drop-shadow-lg text-left md:text-center">
-                Asaan Labs was founded by <a href="https://www.linkedin.com/in/devarbaig" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors font-bold underline decoration-primary/30 underline-offset-4">Abdul Rahman Baig</a> with a simple yet powerful mission: to make life easier by harnessing the true potential of Artificial Intelligence. 
-                <br /><br />
-                We believe that complex AI shouldn't be complicated to use. Our goal is to empower individuals and businesses by building seamless, intelligent solutions that automate tedious workflows, solve complex problems, and ultimately give you your time back.
-              </motion.p>
-            </motion.div>
-          </div>
-        </section>
       </main>
       <FloatingContact />
     </div>
