@@ -78,20 +78,24 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       
       let currentRadius = baseRadius;
       
-      // Expand sphere towards camera when scrolling to Services section
-      if (scroll > 0.1 && scroll <= 0.6) {
-        const progress = (scroll - 0.1) / 0.3; // peaks around 0.4
-        const multiplier = progress < 1 ? progress : 1 - ((scroll - 0.4) / 0.2); 
-        currentRadius = baseRadius + Math.max(0, multiplier * maxExtraRadius);
-      }
-      
-      // Shrink and move left for Contact section
-      if (scroll > 0.7) {
-         currentRadius = baseRadius * 0.8;
+      // Sync radius expansion with page.tsx scroll breakpoints
+      if (scroll > 0.3 && scroll <= 0.55) {
+        // Expanding phase
+        const progress = (scroll - 0.3) / 0.25; 
+        currentRadius = baseRadius + (progress * maxExtraRadius);
+      } else if (scroll > 0.55 && scroll <= 0.9) {
+        // Fully expanded
+        currentRadius = baseRadius + maxExtraRadius;
+      } else if (scroll > 0.9) {
+        // Collapsing phase (symmetrical to expansion)
+        const progress = Math.min(1, (scroll - 0.9) / 0.1);
+        currentRadius = (baseRadius + maxExtraRadius) - (progress * maxExtraRadius);
       }
 
       // Camera Z distance (how far the "eye" is from the center of the sphere)
       const CAMERA_Z = 300; 
+
+      const totalRotation = rotation + scroll * Math.PI * 4;
 
       const projectedNodes = nodes.map((node) => {
         // Apply radius to unit sphere coordinates
@@ -100,8 +104,8 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         const nz = node.z * currentRadius;
 
         // Rotate around Y axis
-        const rotX = nx * Math.cos(rotation) - nz * Math.sin(rotation);
-        const rotZ = nz * Math.cos(rotation) + nx * Math.sin(rotation);
+        const rotX = nx * Math.cos(totalRotation) - nz * Math.sin(totalRotation);
+        const rotZ = nz * Math.cos(totalRotation) + nx * Math.sin(totalRotation);
         
         // Tilt slightly around X axis
         const tilt = 0.2;
