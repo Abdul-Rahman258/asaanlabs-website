@@ -97,7 +97,7 @@ export default function Home() {
             <motion.div 
               style={{ 
                 opacity: sphereGlowOpacity,
-                background: 'radial-gradient(circle, rgba(39,176,166,0.35) 0%, transparent 70%)'
+                background: 'radial-gradient(circle, rgba(39,176,166,0.15) 0%, transparent 70%)'
               }} 
               className="w-[800px] h-[800px] rounded-full mix-blend-screen animate-pulse" 
             />

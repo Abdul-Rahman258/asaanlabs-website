@@ -123,17 +123,6 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       
       let currentRadius = baseRadius;
       
-      // Scale phase for Torus (Services) & Tornado (Process)
-      if (scroll > 0.35 && scroll <= 0.45) {
-        const progress = (scroll - 0.35) / 0.1; 
-        currentRadius = baseRadius + (progress * maxExtraRadius);
-      } else if (scroll > 0.45 && scroll <= 0.7) {
-        currentRadius = baseRadius + maxExtraRadius;
-      } else if (scroll > 0.7 && scroll <= 0.78) {
-        const progress = (scroll - 0.7) / 0.08;
-        currentRadius = (baseRadius + maxExtraRadius) - (progress * maxExtraRadius);
-      }
-
       // Add continuous breathing to the radius (±4% oscillation)
       const breath = Math.sin(time * 2) * 0.04;
       currentRadius *= (1 + breath);
@@ -266,15 +255,17 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
 
         // Glow is brighter when fully dispersed (shape 0)
         let extraGlow = 0;
-        if (sIdx1 === 0 && sIdx2 === 0) extraGlow = 0.5;
-        else if (sIdx1 === 0) extraGlow = 0.5 * (1 - morph);
-        else if (sIdx2 === 0) extraGlow = 0.5 * morph;
+        if (sIdx1 === 0 && sIdx2 === 0) extraGlow = 0.2;
+        else if (sIdx1 === 0) extraGlow = 0.2 * (1 - morph);
+        else if (sIdx2 === 0) extraGlow = 0.2 * morph;
 
-        const glowRadius = radius * (2.5 + extraGlow * 2);
+        // Dimmed node glow radius
+        const glowRadius = radius * (1.5 + extraGlow * 1.5);
         
         const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, glowRadius);
-        gradient.addColorStop(0, `rgba(255, 255, 255, ${Math.min(1, opacity * 0.9 + extraGlow)})`);
-        gradient.addColorStop(0.3, `rgba(39, 230, 210, ${opacity * 0.4})`);
+        // Dimmed white core and teal outer ring
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${Math.min(1, opacity * 0.5 + extraGlow)})`);
+        gradient.addColorStop(0.3, `rgba(39, 230, 210, ${opacity * 0.2})`);
         gradient.addColorStop(1, `rgba(39, 230, 210, 0)`);
 
         ctx.beginPath();
