@@ -502,6 +502,55 @@ export default function Home() {
         </section>
 
       </main>
+
+      {/* Footer */}
+      <footer className="relative z-10 border-t border-white/5 bg-[#050914] pt-16 pb-8 mt-12">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            {/* Brand */}
+            <div className="flex flex-col gap-4 md:col-span-2">
+              <a href="#" className="flex items-center gap-3 w-fit hover:opacity-80 transition-opacity">
+                <Image src="/AsaanLabsLogoOnly.svg" alt="Asaan Labs Logo" width={32} height={32} className="rounded-md opacity-90" />
+                <span className="text-lg font-black tracking-widest text-slate-200">
+                  ASAAN <span className="font-light text-slate-400">LABS</span>
+                </span>
+              </a>
+              <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
+                Simplifying life through intelligent technology. We build products designed around what people truly need.
+              </p>
+            </div>
+            
+            {/* Quick Links */}
+            <div className="flex flex-col gap-3">
+              <h4 className="text-white font-bold mb-2">Quick Links</h4>
+              <a href="#philosophy" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit">Philosophy</a>
+              <a href="#services" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit">What We Do</a>
+              <a href="#team" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit">Team</a>
+              <a href="#contact" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit">Contact Us</a>
+            </div>
+
+            {/* Contact */}
+            <div className="flex flex-col gap-3">
+              <h4 className="text-white font-bold mb-2">Connect</h4>
+              <a href="mailto:contact.asaanlabs@gmail.com" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit flex items-center gap-2">
+                <Mail className="w-4 h-4" />
+                contact.asaanlabs@gmail.com
+              </a>
+            </div>
+          </div>
+          
+          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-slate-500 text-xs text-center md:text-left">
+              &copy; {new Date().getFullYear()} Asaan Labs. All rights reserved.
+            </p>
+            <div className="flex gap-6">
+              <a href="#" className="text-slate-500 hover:text-slate-300 transition-colors text-xs">Privacy Policy</a>
+              <a href="#" className="text-slate-500 hover:text-slate-300 transition-colors text-xs">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
       <FloatingContact />
     </div>
   );
