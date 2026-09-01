@@ -407,7 +407,7 @@ export default function Home() {
                   <a href="https://www.linkedin.com/in/tanzeel-adnan-952120228/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity inline-block mb-1">
                     <h3 className="text-2xl font-bold text-white underline decoration-primary/30 underline-offset-4 hover:decoration-primary/80 transition-colors">Tanzeel Adnan</h3>
                   </a>
-                  <h4 className="text-primary/80 font-medium text-sm mb-4">AI Engineer</h4>
+                  <h4 className="text-primary/80 font-medium text-sm mb-4">Co-founder · AI Engineer</h4>
                   <p className="text-slate-400 text-sm md:text-base leading-relaxed">
                     Works across AI and product engineering, building AI-powered applications, full-stack systems, APIs, and practical digital solutions.
                   </p>
