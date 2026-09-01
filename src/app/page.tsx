@@ -459,7 +459,7 @@ export default function Home() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: false, margin: "-100px" }}
-              className="p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] bg-gradient-to-br from-[#101a2f]/90 to-[#1a2f4c]/90 backdrop-blur-2xl border border-primary/20 text-center relative overflow-hidden shadow-[0_0_80px_rgba(16,26,47,0.9)] mx-auto lg:w-2/3"
+              className="p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] bg-white/10 backdrop-blur-xl border border-white/20 text-center relative overflow-hidden shadow-[0_8px_32px_rgba(255,255,255,0.02)] mx-auto lg:w-2/3"
             >
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(39,176,166,0.08)_0%,transparent_70%)] pointer-events-none" />
                <motion.h2 variants={textReveal} className="text-3xl md:text-4xl font-extrabold mb-4 text-white relative z-10">
@@ -480,21 +480,21 @@ export default function Home() {
                    name="name" 
                    placeholder="Your Name" 
                    required 
-                   className="w-full px-5 py-3 bg-[#0a0f1c]/50 backdrop-blur-sm border border-primary/30 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all"
+                   className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all"
                  />
                  <input 
                    type="email" 
                    name="email" 
                    placeholder="Your Email" 
                    required 
-                   className="w-full px-5 py-3 bg-[#0a0f1c]/50 backdrop-blur-sm border border-primary/30 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all"
+                   className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all"
                  />
                  <textarea 
                    name="message" 
                    placeholder="How can we automate your workflow?" 
                    required 
                    rows={3}
-                   className="w-full px-5 py-3 bg-[#0a0f1c]/50 backdrop-blur-sm border border-primary/30 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all resize-none"
+                   className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all resize-none"
                  />
                  <motion.button 
                    whileHover={{ scale: 1.02 }}
@@ -565,4 +565,5 @@ export default function Home() {
     </div>
   );
 }
+
 

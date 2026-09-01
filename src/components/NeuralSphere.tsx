@@ -10,18 +10,8 @@ interface NeuralSphereProps {
 export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
-  const scrollRef = useRef(0);
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
   const targetMouseRef = useRef({ x: 0.5, y: 0.5 });
-
-  useEffect(() => {
-    if (scrollYProgress) {
-      const unsubscribe = scrollYProgress.on("change", (latest) => {
-        scrollRef.current = latest;
-      });
-      return () => unsubscribe();
-    }
-  }, [scrollYProgress]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -69,7 +59,7 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         z: Math.sin(theta1) * radiusAtY 
       };
 
-      // 2: DNA Double Helix (Philosophy)
+      // 2: DNA Double Helix (Why Choose Us)
       const t2 = i / NODE_COUNT;
       const angle2 = t2 * Math.PI * 10; 
       const strand = i % 2 === 0 ? 1 : -1;
@@ -88,10 +78,11 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         z: 0.3 * Math.sin(v3)
       };
 
-      // 4: Data Tornado (Process)
+      // 4: Data Tornado (Process - Funnel)
       const t4 = i / NODE_COUNT;
       const angle4 = t4 * Math.PI * 16;
-      const r4 = 1 - t4 * 0.8; 
+      // Upside down funnel: r is small at top (t4=0), large at bottom (t4=1)
+      const r4 = 0.2 + t4 * 1.2; 
       const s4 = {
         x: Math.cos(angle4) * r4,
         y: t4 * 2.0 - 1.0,
@@ -124,73 +115,104 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       rotation += 0.005;
       const time = Date.now() * 0.001;
       
-      // Smoothly interpolate mouse for fluid parallax
       mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.05;
       mouseRef.current.y += (targetMouseRef.current.y - mouseRef.current.y) * 0.05;
 
       const centerX = width / 2;
       const centerY = height / 2;
 
-      const scroll = scrollRef.current;
-      
       const screenMin = Math.min(width, height);
       const isMobile = width < 768;
       const baseRadius = isMobile ? screenMin * 0.3 : 160;
-      
       let currentRadius = baseRadius;
-
-      // Add continuous breathing to the radius
       const breath = Math.sin(time * 2) * 0.04;
       currentRadius *= (1 + breath);
 
-      // Re-aligned waypoints for shape morphing to perfectly match sections
-      const waypoints = [
-        { s: 0.00, shape: 0 },
-        { s: 0.05, shape: 1 }, // Hero: Assemble to Sphere
-        { s: 0.12, shape: 1 }, 
-        { s: 0.18, shape: 2 }, // Philosophy: Morph to DNA
-        { s: 0.28, shape: 2 }, 
-        { s: 0.36, shape: 3 }, // What We Do: Morph to Torus
-        { s: 0.50, shape: 3 }, 
-        { s: 0.58, shape: 4 }, // Process: Morph to Tornado
-        { s: 0.70, shape: 4 }, 
-        { s: 0.76, shape: 5 }, // Team: Morph to 3 Clusters
-        { s: 0.85, shape: 5 }, 
-        { s: 0.90, shape: 1 }, // Why Us / Footer: Morph back to Sphere
-        { s: 0.95, shape: 1 }, 
-        { s: 1.00, shape: 0 }  // End: Disperse
+      // --- DYNAMIC WAYPOINTS BASED ON DOM ---
+      const yScroll = window.scrollY;
+      const navOffset = 200; // Transition finishes exactly as the section hits the upper area of the screen
+
+      const getElementAbsoluteY = (id: string) => {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          return rect.top + window.scrollY;
+        }
+        return -1;
+      };
+
+      const rawWaypoints = [
+        { y: 0, shape: 0 },
+        { y: 300, shape: 1 }, // Hero is assembled
       ];
+
+      // Add target shapes exactly at the section offsets
+      const addSection = (id: string, shape: number) => {
+        const y = getElementAbsoluteY(id);
+        if (y !== -1) {
+          // The shape should be fully formed a bit before the section hits the exact top
+          rawWaypoints.push({ y: y - navOffset, shape: shape });
+        }
+      };
+
+      // Map according to user request
+      addSection('philosophy', 1); // Philosophy / Think -> Sphere (Brain)
+      addSection('services', 3);   // What We Do -> Torus (Donut)
+      addSection('process', 4);    // Process -> Upside down funnel (Tornado)
+      addSection('team', 5);       // Team -> 3 Mushed balls (Clusters)
+      addSection('why-us', 2);     // Why Choose Us -> DNA
+      addSection('contact', 1);    // Ready to Automate -> Sphere
+      
+      const footer = document.querySelector('footer');
+      if (footer) {
+        const footerY = footer.getBoundingClientRect().top + window.scrollY;
+        rawWaypoints.push({ y: footerY - window.innerHeight + 300, shape: 0 }); // Disperse
+      } else {
+        rawWaypoints.push({ y: document.body.scrollHeight, shape: 0 });
+      }
+
+      // Sort and deduplicate by Y so interpolation works correctly
+      rawWaypoints.sort((a, b) => a.y - b.y);
+      const waypoints = rawWaypoints.filter((wp, i, arr) => i === 0 || wp.y > arr[i-1].y);
 
       let sIdx1 = 0;
       let sIdx2 = 0;
       let morph = 0;
 
       for (let i = 0; i < waypoints.length - 1; i++) {
-        if (scroll >= waypoints[i].s && scroll <= waypoints[i+1].s) {
+        if (yScroll >= waypoints[i].y && yScroll <= waypoints[i+1].y) {
           sIdx1 = waypoints[i].shape;
           sIdx2 = waypoints[i+1].shape;
-          const rawInterp = (scroll - waypoints[i].s) / (waypoints[i+1].s - waypoints[i].s);
-          morph = rawInterp * rawInterp * (3 - 2 * rawInterp); // Smoothstep easing
+          const range = waypoints[i+1].y - waypoints[i].y;
+          if (range > 0) {
+            const rawInterp = (yScroll - waypoints[i].y) / range;
+            morph = rawInterp * rawInterp * (3 - 2 * rawInterp); 
+          }
           break;
         }
       }
-      if (scroll > waypoints[waypoints.length - 1].s) {
+      
+      if (waypoints.length > 0 && yScroll >= waypoints[waypoints.length - 1].y) {
         sIdx1 = waypoints[waypoints.length - 1].shape;
         sIdx2 = sIdx1;
         morph = 0;
       }
+
+      // -------------------------------------
       
       const isDispersed = (sIdx1 === 0 && sIdx2 === 0);
       const connectionOpacityMultiplier = isDispersed ? 0 : 
          (sIdx1 === 0 ? morph : (sIdx2 === 0 ? 1 - morph : 1));
 
       const CAMERA_Z = 400; 
+      
+      // Calculate scroll rotation manually since we dropped scrollYProgress
+      const scrollRot = yScroll * 0.002;
       const mouseRotX = (mouseRef.current.y - 0.5) * 1.5;
       const mouseRotY = (mouseRef.current.x - 0.5) * 1.5;
-      const totalRotation = rotation + scroll * Math.PI * 4 + mouseRotY;
+      const totalRotation = rotation + scrollRot + mouseRotY;
 
       const projectedNodes = nodes.map((node, i) => {
-        // Subtle drift based on time and node index for a "living" fluid effect
         const driftX = Math.sin(time * 1.5 + i) * 0.08;
         const driftY = Math.cos(time * 1.2 + i) * 0.08;
         const driftZ = Math.sin(time * 1.8 + i) * 0.08;
@@ -198,7 +220,6 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         const p1 = node.shapes[sIdx1];
         const p2 = node.shapes[sIdx2];
 
-        // Interpolate between the two current active shapes
         const ux = p1.x * (1 - morph) + p2.x * morph + driftX;
         const uy = p1.y * (1 - morph) + p2.y * morph + driftY;
         const uz = p1.z * (1 - morph) + p2.z * morph + driftZ;
@@ -207,19 +228,15 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         const ny = uy * currentRadius;
         const nz = uz * currentRadius;
 
-        // Dynamic tilt + mouse tilt
         const tiltX = 0.2 + Math.sin(time * 0.5) * 0.1 + mouseRotX;
         const tiltZ = Math.cos(time * 0.4) * 0.1;
 
-        // Rotate around Y axis
         const rotX = nx * Math.cos(totalRotation) - nz * Math.sin(totalRotation);
         const rotZ = nz * Math.cos(totalRotation) + nx * Math.sin(totalRotation);
         
-        // Tilt X
         const finalY = ny * Math.cos(tiltX) - rotZ * Math.sin(tiltX);
         const tempZ = rotZ * Math.cos(tiltX) + ny * Math.sin(tiltX);
 
-        // Tilt Z
         const finalX = rotX * Math.cos(tiltZ) - finalY * Math.sin(tiltZ);
         const finalFinalY = finalY * Math.cos(tiltZ) + rotX * Math.sin(tiltZ);
 
@@ -278,11 +295,9 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         else if (sIdx1 === 0) extraGlow = 0.2 * (1 - morph);
         else if (sIdx2 === 0) extraGlow = 0.2 * morph;
 
-        // Dimmed node glow radius
         const glowRadius = radius * (1.5 + extraGlow * 1.5);
         
         const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, glowRadius);
-        // Dimmed white core and teal outer ring
         gradient.addColorStop(0, `rgba(255, 255, 255, ${Math.min(1, opacity * 0.5 + extraGlow)})`);
         gradient.addColorStop(0.3, `rgba(39, 230, 210, ${opacity * 0.2})`);
         gradient.addColorStop(1, `rgba(39, 230, 210, 0)`);
