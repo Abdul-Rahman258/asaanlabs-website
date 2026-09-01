@@ -103,18 +103,18 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       if (i < 60) {
         // Left cluster
         const angle = Math.random() * Math.PI * 2;
-        const radius = Math.random() * 0.5;
+        const radius = Math.random() * 0.6;
         s6 = {
-          x: -1.2 + Math.cos(angle) * radius,
+          x: -2.2 + Math.cos(angle) * radius,
           y: Math.sin(angle) * radius + (Math.random() - 0.5) * 0.3,
           z: (Math.random() - 0.5) * 0.5
         };
       } else if (i < 120) {
         // Right cluster
         const angle = Math.random() * Math.PI * 2;
-        const radius = Math.random() * 0.5;
+        const radius = Math.random() * 0.6;
         s6 = {
-          x: 1.2 + Math.cos(angle) * radius,
+          x: 2.2 + Math.cos(angle) * radius,
           y: Math.sin(angle) * radius + (Math.random() - 0.5) * 0.3,
           z: (Math.random() - 0.5) * 0.5
         };
@@ -122,7 +122,7 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         // Bridge in between
         const t = (i - 120) / 30; // 0 to 1
         s6 = {
-          x: -1.0 + t * 2.0,
+          x: -1.8 + t * 3.6,
           y: (Math.random() - 0.5) * 0.2,
           z: (Math.random() - 0.5) * 0.2
         };
@@ -278,8 +278,19 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         const tiltX = 0.2 + Math.sin(time * 0.5) * 0.1 + mouseRotX;
         const tiltZ = Math.cos(time * 0.4) * 0.1;
 
-        const rotX = nx * Math.cos(totalRotation) - nz * Math.sin(totalRotation);
-        const rotZ = nz * Math.cos(totalRotation) + nx * Math.sin(totalRotation);
+        let shape6Weight = 0;
+        if (sIdx1 === 6 && sIdx2 === 6) shape6Weight = 1;
+        else if (sIdx1 === 6) shape6Weight = 1 - morph;
+        else if (sIdx2 === 6) shape6Weight = morph;
+
+        // Counter-rotate the X and Z coordinates before applying the main rotation
+        // so that Shape 6 stays fixed horizontally and doesn't spin into the middle.
+        const counterRot = -totalRotation * shape6Weight;
+        const cx = nx * Math.cos(counterRot) - nz * Math.sin(counterRot);
+        const cz = nz * Math.cos(counterRot) + nx * Math.sin(counterRot);
+
+        const rotX = cx * Math.cos(totalRotation) - cz * Math.sin(totalRotation);
+        const rotZ = cz * Math.cos(totalRotation) + cx * Math.sin(totalRotation);
         
         const finalY = ny * Math.cos(tiltX) - rotZ * Math.sin(tiltX);
         const tempZ = rotZ * Math.cos(tiltX) + ny * Math.sin(tiltX);
