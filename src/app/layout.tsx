@@ -42,9 +42,9 @@ export const metadata: Metadata = {
     siteName: 'Asaan Labs',
     images: [
       {
-        url: '/AsaanLabsLogoOnly.svg', // Will update this to a proper OG image if available later
-        width: 800,
-        height: 600,
+        url: '/Logo.png', 
+        width: 1200,
+        height: 630,
         alt: 'Asaan Labs Logo',
       },
     ],
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Asaan Labs | Simplifying life with AI",
     description: "Intelligent, end-to-end AI applications designed to automate workflows.",
-    images: ['/AsaanLabsLogoOnly.svg'], // Update later
+    images: ['/Logo.png'], 
   },
   robots: {
     index: true,
