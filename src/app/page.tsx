@@ -88,18 +88,24 @@ export default function Home() {
         style={{ x: sphereX, y: "-50%" }}
         className="fixed top-1/2 -left-[50vw] w-[200vw] h-[200vh] z-0 pointer-events-none hidden lg:block"
       >
-        <div className="absolute inset-0 flex items-center justify-center">
-          <motion.div 
-            style={{ 
-              opacity: sphereGlowOpacity,
-              background: 'radial-gradient(circle, rgba(39,176,166,0.35) 0%, transparent 70%)'
-            }} 
-            className="w-[800px] h-[800px] rounded-full mix-blend-screen animate-pulse" 
-          />
-        </div>
-        <div className="absolute inset-0 w-full h-full">
-          <NeuralSphere scrollYProgress={scrollYProgress} />
-        </div>
+        <motion.div 
+          animate={{ y: [0, -30, 0, 30, 0] }} 
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="w-full h-full"
+        >
+          <div className="absolute inset-0 flex items-center justify-center">
+            <motion.div 
+              style={{ 
+                opacity: sphereGlowOpacity,
+                background: 'radial-gradient(circle, rgba(39,176,166,0.35) 0%, transparent 70%)'
+              }} 
+              className="w-[800px] h-[800px] rounded-full mix-blend-screen animate-pulse" 
+            />
+          </div>
+          <div className="absolute inset-0 w-full h-full">
+            <NeuralSphere scrollYProgress={scrollYProgress} />
+          </div>
+        </motion.div>
       </motion.div>
 
       {/* Navbar */}

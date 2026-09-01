@@ -111,38 +111,58 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       const easedAssembly = easeInOutCubic(Math.max(0, Math.min(1, assemblyProgress)));
       const connectionOpacityMultiplier = easedAssembly; 
 
+      const time = Date.now() * 0.001;
+
+      // Add continuous breathing to the radius (±4% oscillation)
+      const breath = Math.sin(time * 2) * 0.04;
+      currentRadius *= (1 + breath);
+
       const CAMERA_Z = 300; 
       const totalRotation = rotation + scroll * Math.PI * 4;
 
-      const projectedNodes = nodes.map((node) => {
-        // Interpolate between dispersed and target positions
-        const ux = node.dispersed.x * (1 - easedAssembly) + node.target.x * easedAssembly;
-        const uy = node.dispersed.y * (1 - easedAssembly) + node.target.y * easedAssembly;
-        const uz = node.dispersed.z * (1 - easedAssembly) + node.target.z * easedAssembly;
+      const projectedNodes = nodes.map((node, i) => {
+        // Subtle drift based on time and node index for a "living" fluid effect
+        const driftX = Math.sin(time * 1.5 + i) * 0.08 * easedAssembly;
+        const driftY = Math.cos(time * 1.2 + i) * 0.08 * easedAssembly;
+        const driftZ = Math.sin(time * 1.8 + i) * 0.08 * easedAssembly;
+
+        // Interpolate between dispersed and target positions, plus the fluid drift
+        const ux = node.dispersed.x * (1 - easedAssembly) + (node.target.x + driftX) * easedAssembly;
+        const uy = node.dispersed.y * (1 - easedAssembly) + (node.target.y + driftY) * easedAssembly;
+        const uz = node.dispersed.z * (1 - easedAssembly) + (node.target.z + driftZ) * easedAssembly;
 
         const nx = ux * currentRadius;
         const ny = uy * currentRadius;
         const nz = uz * currentRadius;
 
+        // Dynamic, continuously shifting tilt axes instead of a rigid fixed tilt
+        const tiltX = 0.2 + Math.sin(time * 0.5) * 0.15;
+        const tiltZ = Math.cos(time * 0.4) * 0.1;
+
+        // Rotate around Y axis
         const rotX = nx * Math.cos(totalRotation) - nz * Math.sin(totalRotation);
         const rotZ = nz * Math.cos(totalRotation) + nx * Math.sin(totalRotation);
         
-        const tilt = 0.2;
-        const finalY = ny * Math.cos(tilt) - rotZ * Math.sin(tilt);
-        const finalZ = rotZ * Math.cos(tilt) + ny * Math.sin(tilt);
+        // Tilt X
+        const finalY = ny * Math.cos(tiltX) - rotZ * Math.sin(tiltX);
+        const tempZ = rotZ * Math.cos(tiltX) + ny * Math.sin(tiltX);
 
-        const depth = CAMERA_Z + finalZ;
+        // Tilt Z
+        const finalX = rotX * Math.cos(tiltZ) - finalY * Math.sin(tiltZ);
+        const finalFinalY = finalY * Math.cos(tiltZ) + rotX * Math.sin(tiltZ);
+
+        const depth = CAMERA_Z + tempZ;
         
         if (depth <= 10) {
-          return { x: 0, y: 0, z: finalZ, scale: 0, visible: false, original: {x: nx, y: ny, z: nz} };
+          return { x: 0, y: 0, z: tempZ, scale: 0, visible: false, original: {x: nx, y: ny, z: nz} };
         }
 
         const scale = CAMERA_Z / depth;
         
         return {
-          x: centerX + rotX * scale,
-          y: centerY + finalY * scale,
-          z: finalZ,
+          x: centerX + finalX * scale,
+          y: centerY + finalFinalY * scale,
+          z: tempZ,
           scale,
           visible: true,
           original: {x: nx, y: ny, z: nz}
