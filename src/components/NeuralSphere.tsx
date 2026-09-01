@@ -98,7 +98,37 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         z: (Math.random() - 0.5) * 0.5
       };
 
-      nodes.push({ shapes: [s0, s1, s2, s3, s4, s5] });
+      // 6: Handshake / Bridge (Contact Us)
+      let s6 = { x: 0, y: 0, z: 0 };
+      if (i < 60) {
+        // Left cluster
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 0.5;
+        s6 = {
+          x: -1.2 + Math.cos(angle) * radius,
+          y: Math.sin(angle) * radius + (Math.random() - 0.5) * 0.3,
+          z: (Math.random() - 0.5) * 0.5
+        };
+      } else if (i < 120) {
+        // Right cluster
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 0.5;
+        s6 = {
+          x: 1.2 + Math.cos(angle) * radius,
+          y: Math.sin(angle) * radius + (Math.random() - 0.5) * 0.3,
+          z: (Math.random() - 0.5) * 0.5
+        };
+      } else {
+        // Bridge in between
+        const t = (i - 120) / 30; // 0 to 1
+        s6 = {
+          x: -1.0 + t * 2.0,
+          y: (Math.random() - 0.5) * 0.2,
+          z: (Math.random() - 0.5) * 0.2
+        };
+      }
+
+      nodes.push({ shapes: [s0, s1, s2, s3, s4, s5, s6] });
     }
 
     const render = () => {
@@ -174,7 +204,7 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       addSection('process', 4);    // Process -> Upside down funnel (Tornado)
       addSection('team', 5);       // Team -> 3 Mushed balls (Clusters)
       addSection('why-us', 2);     // Why Choose Us -> DNA
-      addSection('contact', 1);    // Ready to Automate -> Sphere
+      addSection('contact', 6);    // Ready to Automate -> Handshake/Bridge
       
       const footer = document.querySelector('footer');
       if (footer) {
@@ -343,3 +373,4 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
     </div>
   );
 }
+
