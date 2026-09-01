@@ -110,12 +110,12 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-xl border-b border-white/5"
       >
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative">
-          <div className="flex items-center gap-3 relative z-10">
+          <a href="#" className="flex items-center gap-3 relative z-10 hover:opacity-80 transition-opacity">
             <Image src="/AsaanLabsLogoOnly.svg" alt="Asaan Labs Logo" width={40} height={40} className="rounded-md" />
             <span className="text-xl font-black tracking-widest text-foreground">
               ASAAN <span className="font-light text-slate-400">LABS</span>
             </span>
-          </div>
+          </a>
           <div className="hidden md:flex gap-8 text-sm font-medium text-slate-300 absolute left-1/2 -translate-x-1/2 z-0">
             <a href="#philosophy" className="hover:text-primary transition-colors">Philosophy</a>
             <a href="#services" className="hover:text-primary transition-colors">What We Do</a>
@@ -154,6 +154,14 @@ export default function Home() {
               
               <motion.div variants={textReveal} className="flex flex-col sm:flex-row gap-4">
                 <motion.a 
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
+                  whileTap={{ scale: 0.95 }}
+                  href="#services" 
+                  className="inline-flex justify-center items-center px-6 py-3 bg-white/5 border border-white/10 text-slate-200 font-semibold rounded-full backdrop-blur-md"
+                >
+                  Explore Solutions
+                </motion.a>
+                <motion.a 
                   whileHover={{ scale: 1.05, backgroundColor: "rgba(39,176,166,0.8)" }}
                   whileTap={{ scale: 0.95 }}
                   href="#contact" 
@@ -162,21 +170,13 @@ export default function Home() {
                   Partner with Us
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </motion.a>
-                <motion.a 
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
-                  whileTap={{ scale: 0.95 }}
-                  href="#services" 
-                  className="inline-flex justify-center items-center px-6 py-3 bg-white/5 border border-white/10 text-slate-200 font-semibold rounded-full backdrop-blur-md"
-                >
-                  Explore Solutions
-                </motion.a>
               </motion.div>
             </motion.div>
           </div>
         </motion.section>
 
         {/* Philosophy Section */}
-        <section id="philosophy" className="py-16 md:py-24 relative z-10 bg-transparent border-t border-white/5">
+        <section id="philosophy" className="pt-16 md:pt-24 pb-8 md:pb-12 relative z-10 bg-transparent border-t border-white/5">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }}>
               <motion.h2 variants={textReveal} className="text-3xl md:text-5xl font-extrabold mb-6 drop-shadow-xl text-white">
@@ -195,7 +195,7 @@ export default function Home() {
         </section>
 
         {/* How We Think */}
-        <section className="py-16 md:py-24 relative z-10 bg-transparent border-t border-white/5">
+        <section className="pt-8 md:pt-12 pb-16 md:pb-24 relative z-10 bg-transparent">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }}>
               <motion.h2 variants={textReveal} className="text-3xl md:text-5xl font-extrabold mb-2 drop-shadow-xl text-white">
@@ -360,7 +360,9 @@ export default function Home() {
                 className="bg-gradient-to-br from-[#101a2f] to-[#0a0f1c] rounded-3xl p-8 md:p-12 border border-primary/20 flex flex-col justify-center h-full shadow-[0_0_30px_rgba(39,176,166,0.1)] relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-2">Abdul Rehman Baig</h3>
+                <a href="https://www.linkedin.com/in/devarbaig" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity inline-block mb-2">
+                  <h3 className="text-3xl md:text-4xl font-extrabold text-white underline decoration-primary/30 underline-offset-4 hover:decoration-primary/80 transition-colors">Abdul Rehman Baig</h3>
+                </a>
                 <h4 className="text-primary font-semibold text-lg mb-6">Founder & CEO · Agentic AI Developer</h4>
                 <p className="text-slate-300 leading-relaxed text-base md:text-lg">
                   Leads the technical and AI direction at Asaan Labs, focusing on machine learning, deep learning, computer vision, data science, and emerging Agentic AI.
@@ -377,7 +379,9 @@ export default function Home() {
                   transition={{ delay: 0.2 }}
                   className="bg-[#0a0f1c]/80 rounded-3xl p-8 border border-white/10 hover:border-primary/30 transition-all flex flex-col justify-center backdrop-blur-sm"
                 >
-                  <h3 className="text-2xl font-bold text-white mb-1">Ali Hassan Mirza</h3>
+                  <a href="https://www.linkedin.com/in/ali-hassan-mirza-34b8a428b/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity inline-block mb-1">
+                    <h3 className="text-2xl font-bold text-white underline decoration-primary/30 underline-offset-4 hover:decoration-primary/80 transition-colors">Ali Hassan Mirza</h3>
+                  </a>
                   <h4 className="text-primary/80 font-medium text-sm mb-4">Co-founder · Product Designer</h4>
                   <p className="text-slate-400 text-sm md:text-base leading-relaxed">
                     Leads product and experience, bringing together UX research, product design, usability, user psychology, data analysis, and user-centred design.
@@ -392,7 +396,9 @@ export default function Home() {
                   transition={{ delay: 0.3 }}
                   className="bg-[#0a0f1c]/80 rounded-3xl p-8 border border-white/10 hover:border-primary/30 transition-all flex flex-col justify-center backdrop-blur-sm"
                 >
-                  <h3 className="text-2xl font-bold text-white mb-1">Tanzeel Adnan</h3>
+                  <a href="https://www.linkedin.com/in/tanzeel-adnan-952120228/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity inline-block mb-1">
+                    <h3 className="text-2xl font-bold text-white underline decoration-primary/30 underline-offset-4 hover:decoration-primary/80 transition-colors">Tanzeel Adnan</h3>
+                  </a>
                   <h4 className="text-primary/80 font-medium text-sm mb-4">AI Engineer</h4>
                   <p className="text-slate-400 text-sm md:text-base leading-relaxed">
                     Works across AI and product engineering, building AI-powered applications, full-stack systems, APIs, and practical digital solutions.
