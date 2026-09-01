@@ -504,7 +504,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/5 bg-[#050914] pt-16 pb-8 mt-12">
+      <footer className="relative z-10 border-t border-white/5 bg-[#0a0f1c]/60 backdrop-blur-xl pt-16 pb-8 mt-12">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             {/* Brand */}
