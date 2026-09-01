@@ -130,7 +130,8 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
 
       // --- DYNAMIC WAYPOINTS BASED ON DOM ---
       const yScroll = window.scrollY;
-      const navOffset = 200; // Transition finishes exactly as the section hits the upper area of the screen
+      const navOffset = 100; // Finish morph exactly when near navbar
+      const morphDistance = 500; // Take 500px of scrolling to morph
 
       const getElementAbsoluteY = (id: string) => {
         const el = document.getElementById(id);
@@ -146,12 +147,24 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         { y: 300, shape: 1 }, // Hero is assembled
       ];
 
+      let lastY = 300;
+      let lastShape = 1;
+
       // Add target shapes exactly at the section offsets
       const addSection = (id: string, shape: number) => {
-        const y = getElementAbsoluteY(id);
-        if (y !== -1) {
-          // The shape should be fully formed a bit before the section hits the exact top
-          rawWaypoints.push({ y: y - navOffset, shape: shape });
+        const targetY = getElementAbsoluteY(id);
+        if (targetY !== -1) {
+          const finishMorphY = targetY - navOffset;
+          const startMorphY = finishMorphY - morphDistance;
+          
+          if (startMorphY > lastY) {
+            // Hold the previous shape until it's time to start morphing
+            rawWaypoints.push({ y: startMorphY, shape: lastShape });
+          }
+          
+          rawWaypoints.push({ y: finishMorphY, shape: shape });
+          lastY = finishMorphY;
+          lastShape = shape;
         }
       };
 
@@ -166,7 +179,11 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       const footer = document.querySelector('footer');
       if (footer) {
         const footerY = footer.getBoundingClientRect().top + window.scrollY;
-        rawWaypoints.push({ y: footerY - window.innerHeight + 300, shape: 0 }); // Disperse
+        const disperseStart = footerY - window.innerHeight + 100;
+        if (disperseStart > lastY) {
+          rawWaypoints.push({ y: disperseStart, shape: lastShape });
+        }
+        rawWaypoints.push({ y: footerY - window.innerHeight + 500, shape: 0 }); // Disperse
       } else {
         rawWaypoints.push({ y: document.body.scrollHeight, shape: 0 });
       }
