@@ -131,6 +131,8 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       nodes.push({ shapes: [s0, s1, s2, s3, s4, s5, s6] });
     }
 
+    let smoothYScroll = window.scrollY;
+
     const render = () => {
       const width = canvas.offsetWidth;
       const height = canvas.offsetHeight;
@@ -142,7 +144,7 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
 
       ctx.clearRect(0, 0, width, height);
 
-      rotation += 0.005;
+      rotation += 0.003; // slightly slower base rotation for more flowy feel
       const time = Date.now() * 0.001;
       
       mouseRef.current.x += (targetMouseRef.current.x - mouseRef.current.x) * 0.05;
@@ -155,11 +157,12 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       const isMobile = width < 768;
       const baseRadius = isMobile ? screenMin * 0.3 : 160;
       let currentRadius = baseRadius;
-      const breath = Math.sin(time * 2) * 0.04;
+      const breath = Math.sin(time * 1.5) * 0.05;
       currentRadius *= (1 + breath);
 
       // --- DYNAMIC WAYPOINTS BASED ON DOM ---
-      const yScroll = window.scrollY;
+      smoothYScroll += (window.scrollY - smoothYScroll) * 0.06; // Smooth lerp for buttery animations
+      const yScroll = smoothYScroll;
       const navOffset = 100; // Finish morph exactly when near navbar
       const morphDistance = 500; // Take 500px of scrolling to morph
 
@@ -260,9 +263,10 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       const totalRotation = rotation + scrollRot + mouseRotY;
 
       const projectedNodes = nodes.map((node, i) => {
-        const driftX = Math.sin(time * 1.5 + i) * 0.08;
-        const driftY = Math.cos(time * 1.2 + i) * 0.08;
-        const driftZ = Math.sin(time * 1.8 + i) * 0.08;
+        // Slower, wider sine waves for a much more "flowy", fluid, and natural breathing feel
+        const driftX = Math.sin(time * 0.8 + i) * 0.12;
+        const driftY = Math.cos(time * 0.6 + i) * 0.12;
+        const driftZ = Math.sin(time * 0.9 + i) * 0.12;
 
         const p1 = node.shapes[sIdx1];
         const p2 = node.shapes[sIdx2];
