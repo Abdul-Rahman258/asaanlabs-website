@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, Variants, AnimatePresence } from "framer-motion";
-import { ArrowRight, Bot, Cpu, LineChart, Mail, Sparkles, Smartphone, Globe, MonitorSmartphone, Brain, LayoutTemplate, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Bot, Cpu, LineChart, Mail, Sparkles, Smartphone, Globe, MonitorSmartphone, Brain, LayoutTemplate, ChevronLeft, ChevronRight, Search, Lightbulb, PenTool, Code, Rocket, RefreshCw, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import NeuralBackground from "../components/NeuralBackground";
 import NeuralSphere from "../components/NeuralSphere";
@@ -34,41 +34,44 @@ export default function Home() {
   const servicesList = [
     {
       title: "AI & Machine Learning",
-      desc: "Developing intelligent, agentic AI solutions, generative models, and computer vision systems to solve complex problems and automate workflows.",
+      desc: "We build intelligent systems that solve complex problems, automate complexity, and create meaningful new possibilities.",
       icon: Brain,
-      tiles: [
-        { label: "Agentic Workflows", icon: Bot },
-        { label: "Custom LLM Integration", icon: Cpu },
-        { label: "Predictive Analytics", icon: LineChart }
-      ]
     },
     {
-      title: "Data Science",
-      desc: "Extracting actionable insights from raw data using advanced predictive modeling, data visualization, and statistical analysis.",
+      title: "Data Analytics",
+      desc: "We turn data into understanding—uncovering patterns, behaviours, and insights that lead to better product decisions.",
       icon: LineChart,
-      tiles: [
-        { label: "Big Data Processing", icon: Globe },
-        { label: "Data Visualization", icon: LayoutTemplate },
-        { label: "Statistical Modeling", icon: Sparkles }
-      ]
     },
     {
-      title: "Web & Product Design",
-      desc: "Crafting intuitive, responsive user interfaces and full-stack web applications that prioritize user experience and performance.",
+      title: "Product Design",
+      desc: "We turn complex technology into simple, intuitive experiences through research, psychology, design, and continuous refinement.",
       icon: LayoutTemplate,
-      tiles: [
-        { label: "Web AI Tools", icon: Globe },
-        { label: "Android AI Apps", icon: Smartphone },
-        { label: "Desktop AI Software", icon: MonitorSmartphone }
-      ]
     }
+  ];
+
+  const processSteps = [
+    { num: "01", title: "Understand", desc: "We study the problem, the people, and the need behind it.", icon: Search },
+    { num: "02", title: "Think", desc: "We examine the problem through multiple disciplines and perspectives.", icon: Lightbulb },
+    { num: "03", title: "Design", desc: "We shape an experience around what users genuinely need.", icon: PenTool },
+    { num: "04", title: "Build", desc: "We combine AI, data, and engineering to bring the product to life.", icon: Code },
+    { num: "05", title: "Launch", desc: "We introduce our products to the real world and the people they were built for.", icon: Rocket },
+    { num: "06", title: "Learn", desc: "We listen, analyse, and continuously improve.", icon: RefreshCw },
+  ];
+
+  const whyUsPoints = [
+    { title: "User First", desc: "We begin with people and their needs—not technology." },
+    { title: "Need Over Want", desc: "We focus on solving what matters, rather than adding unnecessary complexity." },
+    { title: "Multidisciplinary Thinking", desc: "We look beyond a single field to understand problems from multiple perspectives." },
+    { title: "AI with Purpose", desc: "We use AI where it creates meaningful value—not simply because it's possible." },
+    { title: "Design & Engineering Together", desc: "Our product and technical thinking work together from the beginning." },
+    { title: "Beyond Launch", desc: "We don't stop when a product ships. We learn from real users and continuously improve." },
   ];
 
   const nextService = () => setCurrentServiceIndex((prev) => (prev + 1) % servicesList.length);
   const prevService = () => setCurrentServiceIndex((prev) => (prev - 1 + servicesList.length) % servicesList.length);
   
   // Hero text fading out
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   // Sphere transformations
@@ -114,8 +117,9 @@ export default function Home() {
             </span>
           </div>
           <div className="hidden md:flex gap-8 text-sm font-medium text-slate-300 absolute left-1/2 -translate-x-1/2 z-0">
-            <a href="#services" className="hover:text-primary transition-colors">Services</a>
-            <a href="#about" className="hover:text-primary transition-colors">About</a>
+            <a href="#philosophy" className="hover:text-primary transition-colors">Philosophy</a>
+            <a href="#services" className="hover:text-primary transition-colors">What We Do</a>
+            <a href="#team" className="hover:text-primary transition-colors">Team</a>
           </div>
           <motion.a 
             whileHover={{ scale: 1.05 }}
@@ -129,6 +133,7 @@ export default function Home() {
       </motion.nav>
 
       <main className="flex-1 pt-32 relative z-10">
+        
         {/* Hero Section */}
         <motion.section 
           style={{ y: heroY, opacity: heroOpacity }}
@@ -138,18 +143,18 @@ export default function Home() {
             <motion.div variants={staggerContainer} initial="hidden" animate="show" className="max-w-2xl">
               <motion.div variants={textReveal} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs md:text-sm text-primary mb-6 backdrop-blur-md">
                 <Sparkles className="w-4 h-4" />
-                <span>Next-Generation Enterprise AI</span>
+                <span>Asaan Labs</span>
               </motion.div>
               
               <motion.h1 variants={textReveal} className="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 leading-[1.1] perspective-1000">
-                Simplifying<br />life 
+                Simplifying<br />Life 
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400 ml-3">
                   with AI.
                 </span>
               </motion.h1>
               
               <motion.p variants={textReveal} className="text-lg md:text-xl text-slate-400 mb-8 leading-relaxed">
-                Asaan Labs engineers intelligent, end-to-end applications designed to automate workflows, accelerate analytics, and propel your business into the future.
+                We build intelligent, user-centred products designed around what people truly need. By bringing together AI & Machine Learning, Data Analytics, and Product Design, we turn complex problems into simple, useful experiences that people can understand, trust, and use.
               </motion.p>
               
               <motion.div variants={textReveal} className="flex flex-col sm:flex-row gap-4">
@@ -175,58 +180,59 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* About Section - MOVED TO TOP */}
-        <section id="about" className="py-16 md:py-24 relative z-10 bg-transparent border-t border-white/5">
+        {/* Philosophy Section */}
+        <section id="philosophy" className="py-16 md:py-24 relative z-10 bg-transparent border-t border-white/5">
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <motion.div 
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-100px" }}
-              className="relative z-20"
-            >
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }}>
               <motion.h2 variants={textReveal} className="text-3xl md:text-5xl font-extrabold mb-6 drop-shadow-xl text-white">
-                About <span className="text-primary">Us</span>
+                Our <span className="text-primary">Philosophy</span>
               </motion.h2>
               <motion.p variants={textReveal} className="text-slate-300 text-base md:text-lg font-medium leading-relaxed drop-shadow-lg text-left md:text-center">
-                Asaan Labs was founded by <a href="https://www.linkedin.com/in/devarbaig" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors font-bold underline decoration-primary/30 underline-offset-4">Abdul Rahman Baig</a> with a simple yet powerful mission: to make life easier by harnessing the true potential of Artificial Intelligence. 
+                We start with the need, not the want. People can want countless things. But what they want isn't always what they need.
                 <br /><br />
-                We believe that complex AI shouldn't be complicated to use. Our goal is to empower individuals and businesses by building seamless, intelligent solutions that automate tedious workflows, solve complex problems, and ultimately give you your time back.
+                At Asaan Labs, we look beyond the obvious. We study the problem, understand the people experiencing it, and identify the underlying need before deciding what to build. 
+                <br /><br />
+                We believe great technology isn't about adding more.<br />
+                <span className="font-bold text-white text-xl">It's about making life simpler.</span>
               </motion.p>
             </motion.div>
           </div>
         </section>
 
-        {/* Services Section - CAROUSEL */}
+        {/* How We Think */}
+        <section className="py-16 md:py-24 relative z-10 bg-transparent border-t border-white/5">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-100px" }}>
+              <motion.h2 variants={textReveal} className="text-3xl md:text-5xl font-extrabold mb-2 drop-shadow-xl text-white">
+                How We <span className="text-primary">Think</span>
+              </motion.h2>
+              <motion.h3 variants={textReveal} className="text-xl md:text-2xl font-semibold text-primary mb-6">
+                One problem. Multiple perspectives.
+              </motion.h3>
+              <motion.p variants={textReveal} className="text-slate-300 text-base md:text-lg font-medium leading-relaxed drop-shadow-lg text-left md:text-center">
+                Meaningful problems rarely have a single dimension. We use a multidisciplinary approach to understand them through different lenses—including technology, psychology, philosophy, ethics, morality, history, literature, and design.
+                <br /><br />
+                Each perspective helps us see something the others may miss. We bring these insights together to understand the user more deeply and create products that are purposeful, intuitive, and meaningful.
+              </motion.p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* What We Do - CAROUSEL */}
         <section id="services" className="py-16 md:py-24 relative z-10 bg-transparent border-y border-white/5">
           <div className="max-w-7xl mx-auto px-6">
-            <motion.div 
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: false, margin: "-100px" }}
-              className="text-center mb-10 relative z-20"
-            >
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: false, margin: "-100px" }} className="text-center mb-10 relative z-20">
               <motion.h2 variants={textReveal} className="text-3xl md:text-5xl font-extrabold mb-4 drop-shadow-xl">
-                Intelligent <span className="text-primary">Solutions</span>
+                What We <span className="text-primary">Do</span>
               </motion.h2>
               <motion.p variants={textReveal} className="text-slate-300 max-w-2xl mx-auto text-lg md:text-xl font-medium drop-shadow-lg">
-                We bridge the gap between complex machine learning theory and practical, scalable enterprise architecture across all platforms.
+                Three disciplines. One product mindset. We bring together the expertise needed to turn an idea into a product people want to use.
               </motion.p>
             </motion.div>
 
-            <motion.div 
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-50px" }}
-              className="relative max-w-5xl mx-auto flex items-center justify-center min-h-[350px]"
-            >
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="relative max-w-4xl mx-auto flex items-center justify-center min-h-[300px]">
               {/* Desktop Nav Left */}
-              <button 
-                onClick={prevService}
-                className="absolute left-0 md:-left-12 z-30 p-3 rounded-full bg-[#101a2f]/80 border border-primary/30 text-primary hover:bg-primary/20 hover:text-white transition-all backdrop-blur-md hidden sm:flex shadow-[0_0_20px_rgba(39,176,166,0.15)]"
-              >
+              <button onClick={prevService} className="absolute left-0 md:-left-12 z-30 p-3 rounded-full bg-[#101a2f]/80 border border-primary/30 text-primary hover:bg-primary/20 hover:text-white transition-all backdrop-blur-md hidden sm:flex shadow-[0_0_20px_rgba(39,176,166,0.15)]">
                 <ChevronLeft className="w-6 h-6" />
               </button>
 
@@ -238,7 +244,7 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -100, scale: 0.9 }}
                     transition={{ duration: 0.5, type: "spring", stiffness: 100, damping: 20 }}
-                    className="w-full max-w-2xl p-6 md:p-10 rounded-[2rem] bg-[#0a0f1c]/80 backdrop-blur-xl border border-white/10 shadow-[0_15px_50px_rgba(0,0,0,0.5)] text-center relative group"
+                    className="w-full max-w-xl p-8 md:p-12 rounded-[2rem] bg-[#0a0f1c]/80 backdrop-blur-xl border border-white/10 shadow-[0_15px_50px_rgba(0,0,0,0.5)] text-center relative group"
                   >
                     <div className="absolute top-[-50px] right-[-50px] w-32 h-32 bg-[radial-gradient(circle,rgba(39,176,166,0.15)_0%,transparent_70%)] transition-colors pointer-events-none" />
                     
@@ -251,33 +257,18 @@ export default function Home() {
                       );
                     })()}
                     
-                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 drop-shadow-md">
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 drop-shadow-md">
                       {servicesList[currentServiceIndex].title}
                     </h3>
-                    <p className="text-slate-300 leading-relaxed font-light text-sm md:text-base mb-6">
+                    <p className="text-slate-300 leading-relaxed font-light text-base md:text-lg mb-4">
                       {servicesList[currentServiceIndex].desc}
                     </p>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      {servicesList[currentServiceIndex].tiles.map((tile, i) => {
-                        const TileIcon = tile.icon;
-                        return (
-                          <div key={i} className="flex flex-col items-center justify-center p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors shadow-inner">
-                            <TileIcon className="w-6 h-6 text-primary mb-2 drop-shadow-sm" />
-                            <span className="text-xs md:text-sm font-semibold text-slate-200 text-center">{tile.label}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
                   </motion.div>
                 </AnimatePresence>
               </div>
 
               {/* Desktop Nav Right */}
-              <button 
-                onClick={nextService}
-                className="absolute right-0 md:-right-12 z-30 p-3 rounded-full bg-[#101a2f]/80 border border-primary/30 text-primary hover:bg-primary/20 hover:text-white transition-all backdrop-blur-md hidden sm:flex shadow-[0_0_20px_rgba(39,176,166,0.15)]"
-              >
+              <button onClick={nextService} className="absolute right-0 md:-right-12 z-30 p-3 rounded-full bg-[#101a2f]/80 border border-primary/30 text-primary hover:bg-primary/20 hover:text-white transition-all backdrop-blur-md hidden sm:flex shadow-[0_0_20px_rgba(39,176,166,0.15)]">
                 <ChevronRight className="w-6 h-6" />
               </button>
             </motion.div>
@@ -303,13 +294,156 @@ export default function Home() {
                 <ChevronRight className="w-6 h-6" />
               </button>
             </div>
+            
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="mt-16 text-center">
+              <div className="inline-block p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                <h4 className="text-xl font-bold text-white mb-3">Together</h4>
+                <p className="text-slate-300 text-sm md:text-base font-medium flex flex-col md:flex-row gap-2 md:gap-6 justify-center">
+                  <span><span className="text-primary font-bold">AI</span> gives intelligence.</span>
+                  <span className="hidden md:inline text-white/30">•</span>
+                  <span><span className="text-primary font-bold">Data</span> gives understanding.</span>
+                  <span className="hidden md:inline text-white/30">•</span>
+                  <span><span className="text-primary font-bold">Design</span> gives clarity.</span>
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Process Section */}
+        <section className="py-16 md:py-24 relative z-10 bg-transparent border-b border-white/5">
+          <div className="max-w-7xl mx-auto px-6">
+            <motion.h2 initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-3xl md:text-5xl font-extrabold mb-12 text-center text-white drop-shadow-xl">
+              Our <span className="text-primary">Process</span>
+            </motion.h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {processSteps.map((step, i) => {
+                const StepIcon = step.icon;
+                return (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="p-6 rounded-2xl bg-[#0a0f1c]/60 backdrop-blur-md border border-white/5 hover:border-primary/30 transition-all group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-4xl font-black text-white/10 group-hover:text-primary/20 transition-colors">{step.num}</span>
+                      <StepIcon className="w-8 h-8 text-primary/70 group-hover:text-primary transition-colors" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
+                    <p className="text-slate-400 text-sm">{step.desc}</p>
+                  </motion.div>
+                );
+              })}
+            </div>
+            <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-12 text-center text-slate-300 font-medium text-lg max-w-2xl mx-auto">
+              Because launching a product isn't the finish line. <br/><span className="text-primary font-bold">It's where learning begins.</span>
+            </motion.p>
+          </div>
+        </section>
+
+        {/* Meet the Team (Bento Layout) */}
+        <section id="team" className="py-16 md:py-24 relative z-10 bg-transparent border-b border-white/5">
+          <div className="max-w-6xl mx-auto px-6">
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-center mb-12">
+              <motion.h2 variants={textReveal} className="text-3xl md:text-5xl font-extrabold mb-4 text-white drop-shadow-xl">
+                Meet the <span className="text-primary">Team</span>
+              </motion.h2>
+              <motion.p variants={textReveal} className="text-slate-300 max-w-2xl mx-auto text-lg">
+                We bring together AI, machine learning, engineering, data, and product design to build technology around people.
+              </motion.p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Left Big Block - Abdul Rehman Baig */}
+              <motion.div 
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-[#101a2f] to-[#0a0f1c] rounded-3xl p-8 md:p-12 border border-primary/20 flex flex-col justify-center h-full shadow-[0_0_30px_rgba(39,176,166,0.1)] relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-2">Abdul Rehman Baig</h3>
+                <h4 className="text-primary font-semibold text-lg mb-6">Founder & CEO · Agentic AI Developer</h4>
+                <p className="text-slate-300 leading-relaxed text-base md:text-lg">
+                  Leads the technical and AI direction at Asaan Labs, focusing on machine learning, deep learning, computer vision, data science, and emerging Agentic AI.
+                </p>
+              </motion.div>
+
+              {/* Right Stacked Blocks */}
+              <div className="grid grid-rows-2 gap-6">
+                {/* Ali Hassan Mirza */}
+                <motion.div 
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="bg-[#0a0f1c]/80 rounded-3xl p-8 border border-white/10 hover:border-primary/30 transition-all flex flex-col justify-center backdrop-blur-sm"
+                >
+                  <h3 className="text-2xl font-bold text-white mb-1">Ali Hassan Mirza</h3>
+                  <h4 className="text-primary/80 font-medium text-sm mb-4">Co-founder · Product Designer</h4>
+                  <p className="text-slate-400 text-sm md:text-base leading-relaxed">
+                    Leads product and experience, bringing together UX research, product design, usability, user psychology, data analysis, and user-centred design.
+                  </p>
+                </motion.div>
+
+                {/* Tanzeel Adnan */}
+                <motion.div 
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-[#0a0f1c]/80 rounded-3xl p-8 border border-white/10 hover:border-primary/30 transition-all flex flex-col justify-center backdrop-blur-sm"
+                >
+                  <h3 className="text-2xl font-bold text-white mb-1">Tanzeel Adnan</h3>
+                  <h4 className="text-primary/80 font-medium text-sm mb-4">AI Engineer</h4>
+                  <p className="text-slate-400 text-sm md:text-base leading-relaxed">
+                    Works across AI and product engineering, building AI-powered applications, full-stack systems, APIs, and practical digital solutions.
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Choose Us */}
+        <section className="py-16 md:py-24 relative z-10 bg-transparent border-b border-white/5">
+          <div className="max-w-6xl mx-auto px-6">
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-center mb-12">
+              <motion.h2 variants={textReveal} className="text-3xl md:text-5xl font-extrabold mb-4 text-white drop-shadow-xl">
+                Why Choose <span className="text-primary">Us</span>
+              </motion.h2>
+              <motion.p variants={textReveal} className="text-slate-300 max-w-2xl mx-auto text-lg">
+                We focus on building technology people actually understand, trust, and use.
+              </motion.p>
+            </motion.div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {whyUsPoints.map((point, idx) => (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="flex flex-col p-6 rounded-2xl bg-white/5 border border-white/5"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
+                    <h3 className="text-lg font-bold text-white">{point.title}</h3>
+                  </div>
+                  <p className="text-slate-400 text-sm pl-8">{point.desc}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* Contact CTA */}
         <section id="contact" className="py-16 md:py-24 relative z-10 overflow-visible">
           <div className="max-w-5xl mx-auto px-6 relative">
-            
             <motion.div 
               variants={staggerContainer}
               initial="hidden"
