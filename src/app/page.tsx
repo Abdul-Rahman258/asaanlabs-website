@@ -113,9 +113,10 @@ export default function Home() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.5 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-xl border-b border-white/5"
+        className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
       >
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative">
+        <div className="absolute inset-0 bg-[#0a0f1c]/40 backdrop-blur-2xl [mask-image:linear-gradient(to_bottom,black_50%,transparent)]" />
+        <div className="max-w-7xl mx-auto px-6 h-24 pt-4 flex items-center justify-between relative pointer-events-auto">
           <a href="#" className="flex items-center gap-3 relative z-10 hover:opacity-80 transition-opacity">
             <Image src="/AsaanLabsLogoOnly.svg" alt="Asaan Labs Logo" width={40} height={40} className="rounded-md" />
             <span className="text-xl font-black tracking-widest text-foreground">
@@ -123,11 +124,11 @@ export default function Home() {
             </span>
           </a>
           <div className="hidden md:flex gap-8 text-sm font-medium text-slate-300 absolute left-1/2 -translate-x-1/2 z-0">
-            <a href="#philosophy" className="hover:text-primary transition-colors">Philosophy</a>
-            <a href="#services" className="hover:text-primary transition-colors">What We Do</a>
-            <a href="#process" className="hover:text-primary transition-colors">Process</a>
-            <a href="#team" className="hover:text-primary transition-colors">Team</a>
-            <a href="#why-us" className="hover:text-primary transition-colors">Why Us</a>
+            <a href="#philosophy" className="hover:text-primary transition-colors drop-shadow-md">Philosophy</a>
+            <a href="#services" className="hover:text-primary transition-colors drop-shadow-md">What We Do</a>
+            <a href="#process" className="hover:text-primary transition-colors drop-shadow-md">Process</a>
+            <a href="#team" className="hover:text-primary transition-colors drop-shadow-md">Team</a>
+            <a href="#why-us" className="hover:text-primary transition-colors drop-shadow-md">Why Us</a>
           </div>
           <motion.a 
             whileHover={{ scale: 1.05 }}
@@ -247,7 +248,7 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -100, scale: 0.9 }}
                     transition={{ duration: 0.5, type: "spring", stiffness: 100, damping: 20 }}
-                    className="w-full max-w-xl p-8 md:p-12 rounded-[2rem] bg-[#0a0f1c]/80 backdrop-blur-xl border border-white/10 shadow-[0_15px_50px_rgba(0,0,0,0.5)] text-center relative group"
+                    className="w-full max-w-xl p-8 md:p-12 rounded-[2rem] bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(255,255,255,0.02)] text-center relative group"
                   >
                     <div className="absolute top-[-50px] right-[-50px] w-32 h-32 bg-[radial-gradient(circle,rgba(39,176,166,0.15)_0%,transparent_70%)] transition-colors pointer-events-none" />
                     
@@ -299,7 +300,7 @@ export default function Home() {
             </div>
             
             <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }} className="mt-16 text-center">
-              <div className="inline-block p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div className="inline-block p-6 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-xl shadow-[0_8px_32px_rgba(255,255,255,0.05)]">
                 <h4 className="text-xl font-bold text-white mb-3">Together</h4>
                 <p className="text-slate-300 text-sm md:text-base font-medium flex flex-col md:flex-row gap-2 md:gap-6 justify-center">
                   <span><span className="text-primary font-bold">AI</span> gives intelligence.</span>
@@ -329,7 +330,7 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                    className="p-6 rounded-2xl bg-[#0a0f1c]/60 backdrop-blur-md border border-white/5 hover:border-primary/30 transition-all group"
+                    className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl shadow-[0_8px_32px_rgba(255,255,255,0.02)] hover:border-primary/30 transition-all group"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-4xl font-black text-white/10 group-hover:text-primary/20 transition-colors">{step.num}</span>
@@ -365,7 +366,7 @@ export default function Home() {
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-[#101a2f] to-[#0a0f1c] rounded-3xl p-8 md:p-12 border border-primary/20 flex flex-col justify-center h-full shadow-[0_0_30px_rgba(39,176,166,0.1)] relative overflow-hidden"
+                className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-white/10 shadow-[0_8px_32px_rgba(255,255,255,0.05)] flex flex-col justify-center h-full shadow-[0_0_30px_rgba(39,176,166,0.1)] relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
                 <a href="https://www.linkedin.com/in/devarbaig" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity inline-block mb-2">
@@ -385,7 +386,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="bg-[#0a0f1c]/80 rounded-3xl p-8 border border-white/10 hover:border-primary/30 transition-all flex flex-col justify-center backdrop-blur-sm"
+                  className="bg-white/10 rounded-3xl p-8 border border-white/10 hover:border-primary/30 transition-all flex flex-col justify-center backdrop-blur-xl shadow-[0_8px_32px_rgba(255,255,255,0.02)]"
                 >
                   <a href="https://www.linkedin.com/in/ali-hassan-mirza-34b8a428b/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity inline-block mb-1">
                     <h3 className="text-2xl font-bold text-white underline decoration-primary/30 underline-offset-4 hover:decoration-primary/80 transition-colors">Ali Hassan Mirza</h3>
@@ -402,7 +403,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
-                  className="bg-[#0a0f1c]/80 rounded-3xl p-8 border border-white/10 hover:border-primary/30 transition-all flex flex-col justify-center backdrop-blur-sm"
+                  className="bg-white/10 rounded-3xl p-8 border border-white/10 hover:border-primary/30 transition-all flex flex-col justify-center backdrop-blur-xl shadow-[0_8px_32px_rgba(255,255,255,0.02)]"
                 >
                   <a href="https://www.linkedin.com/in/tanzeel-adnan-952120228/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity inline-block mb-1">
                     <h3 className="text-2xl font-bold text-white underline decoration-primary/30 underline-offset-4 hover:decoration-primary/80 transition-colors">Tanzeel Adnan</h3>
@@ -437,7 +438,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="flex flex-col p-6 rounded-2xl bg-white/5 border border-white/5"
+                  className="flex flex-col p-6 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-xl shadow-[0_8px_32px_rgba(255,255,255,0.02)]"
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
@@ -512,8 +513,9 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/5 bg-[#0a0f1c]/60 backdrop-blur-xl pt-16 pb-8 mt-12">
-        <div className="max-w-7xl mx-auto px-6">
+      <footer className="relative z-10 pt-16 pb-8 mt-12 overflow-hidden">
+        <div className="absolute inset-0 bg-[#0a0f1c]/60 backdrop-blur-2xl [mask-image:linear-gradient(to_top,black_70%,transparent)] pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 relative pointer-events-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             {/* Brand */}
             <div className="flex flex-col gap-4 md:col-span-2">
@@ -563,3 +565,4 @@ export default function Home() {
     </div>
   );
 }
+
