@@ -86,7 +86,7 @@ export default function Home() {
       {/* Fixed Global Neural Sphere */}
       <motion.div 
         style={{ x: sphereX, y: "-50%" }}
-        className="fixed top-1/2 left-0 w-[100vw] h-[100vh] z-0 pointer-events-none hidden lg:block"
+        className="fixed top-1/2 -left-[50vw] w-[200vw] h-[200vh] z-0 pointer-events-none hidden lg:block"
       >
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div 
