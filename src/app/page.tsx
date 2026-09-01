@@ -141,11 +141,6 @@ export default function Home() {
         >
           <div className="max-w-7xl mx-auto px-6 w-full">
             <motion.div variants={staggerContainer} initial="hidden" animate="show" className="max-w-2xl">
-              <motion.div variants={textReveal} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs md:text-sm text-primary mb-6 backdrop-blur-md">
-                <Sparkles className="w-4 h-4" />
-                <span>Asaan Labs</span>
-              </motion.div>
-              
               <motion.h1 variants={textReveal} className="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 leading-[1.1] perspective-1000">
                 Simplifying<br />Life 
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400 ml-3">
