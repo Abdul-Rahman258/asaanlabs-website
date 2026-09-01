@@ -32,13 +32,16 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
     let animationFrameId: number;
     let rotation = 0;
 
-    const NODE_COUNT = 80;
+    const NODE_COUNT = 100;
     const MAX_CONNECTION_DISTANCE = 80;
 
-    const nodes: { x: number; y: number; z: number }[] = [];
+    // We store the target (sphere) and dispersed (scattered) positions for each node
+    const nodes: { 
+      target: { x: number; y: number; z: number }; 
+      dispersed: { x: number; y: number; z: number };
+    }[] = [];
 
-    // Distribute nodes evenly using Fibonacci sphere on a normalized unit sphere (radius 1)
-    const phi = Math.PI * (3 - Math.sqrt(5)); // golden angle
+    const phi = Math.PI * (3 - Math.sqrt(5)); 
     for (let i = 0; i < NODE_COUNT; i++) {
       const y = 1 - (i / (NODE_COUNT - 1)) * 2; 
       const radiusAtY = Math.sqrt(1 - y * y); 
@@ -47,11 +50,21 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       const x = Math.cos(theta) * radiusAtY;
       const z = Math.sin(theta) * radiusAtY;
 
-      nodes.push({ x, y, z });
+      // Dispersed state: random spread over a much larger volume
+      const dx = (Math.random() - 0.5) * 6;
+      const dy = (Math.random() - 0.5) * 6;
+      const dz = (Math.random() - 0.5) * 6;
+
+      nodes.push({ 
+        target: { x, y, z }, 
+        dispersed: { x: dx, y: dy, z: dz } 
+      });
     }
 
+    // Easing function for smooth convergence
+    const easeInOutCubic = (t: number) => t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+
     const render = () => {
-      // Use offsetWidth so the canvas pixel resolution matches screen resolution
       const width = canvas.offsetWidth;
       const height = canvas.offsetHeight;
       
@@ -67,10 +80,8 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       const centerX = width / 2;
       const centerY = height / 2;
 
-      // Scroll-driven math
       const scroll = scrollRef.current;
       
-      // Responsive dynamic base radius calculation
       const screenMin = Math.min(width, height);
       const isMobile = width < 768;
       const baseRadius = isMobile ? screenMin * 0.3 : 120;
@@ -78,45 +89,50 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       
       let currentRadius = baseRadius;
       
-      // Sync radius expansion with page.tsx scroll breakpoints
+      // Scale phase: 0.3 to 0.55 (expand), 0.55 to 0.85 (hold), 0.85 to 0.92 (shrink)
       if (scroll > 0.3 && scroll <= 0.55) {
-        // Expanding phase
         const progress = (scroll - 0.3) / 0.25; 
         currentRadius = baseRadius + (progress * maxExtraRadius);
-      } else if (scroll > 0.55 && scroll <= 0.9) {
-        // Fully expanded
+      } else if (scroll > 0.55 && scroll <= 0.85) {
         currentRadius = baseRadius + maxExtraRadius;
-      } else if (scroll > 0.9) {
-        // Collapsing phase (symmetrical to expansion)
-        const progress = Math.min(1, (scroll - 0.9) / 0.1);
+      } else if (scroll > 0.85 && scroll <= 0.92) {
+        const progress = (scroll - 0.85) / 0.07;
         currentRadius = (baseRadius + maxExtraRadius) - (progress * maxExtraRadius);
       }
 
-      // Camera Z distance (how far the "eye" is from the center of the sphere)
-      const CAMERA_Z = 300; 
+      // Assembly phase: 0.0 to 0.15 (assemble), 0.92 to 1.0 (disperse)
+      let assemblyProgress = 1;
+      if (scroll < 0.15) {
+        assemblyProgress = scroll / 0.15;
+      } else if (scroll > 0.92) {
+        assemblyProgress = 1 - ((scroll - 0.92) / 0.08);
+      }
+      
+      const easedAssembly = easeInOutCubic(Math.max(0, Math.min(1, assemblyProgress)));
+      const connectionOpacityMultiplier = easedAssembly; 
 
+      const CAMERA_Z = 300; 
       const totalRotation = rotation + scroll * Math.PI * 4;
 
       const projectedNodes = nodes.map((node) => {
-        // Apply radius to unit sphere coordinates
-        const nx = node.x * currentRadius;
-        const ny = node.y * currentRadius;
-        const nz = node.z * currentRadius;
+        // Interpolate between dispersed and target positions
+        const ux = node.dispersed.x * (1 - easedAssembly) + node.target.x * easedAssembly;
+        const uy = node.dispersed.y * (1 - easedAssembly) + node.target.y * easedAssembly;
+        const uz = node.dispersed.z * (1 - easedAssembly) + node.target.z * easedAssembly;
 
-        // Rotate around Y axis
+        const nx = ux * currentRadius;
+        const ny = uy * currentRadius;
+        const nz = uz * currentRadius;
+
         const rotX = nx * Math.cos(totalRotation) - nz * Math.sin(totalRotation);
         const rotZ = nz * Math.cos(totalRotation) + nx * Math.sin(totalRotation);
         
-        // Tilt slightly around X axis
         const tilt = 0.2;
         const finalY = ny * Math.cos(tilt) - rotZ * Math.sin(tilt);
         const finalZ = rotZ * Math.cos(tilt) + ny * Math.sin(tilt);
 
-        // Perspective projection: scale = focal_length / (focal_length + Z)
-        // If finalZ approaches -CAMERA_Z, scale goes to infinity (we pass through it)
         const depth = CAMERA_Z + finalZ;
         
-        // If depth <= 0, the node is behind the camera! We should clip it.
         if (depth <= 10) {
           return { x: 0, y: 0, z: finalZ, scale: 0, visible: false, original: {x: nx, y: ny, z: nz} };
         }
@@ -133,53 +149,44 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
         };
       });
 
-      // Filter visible nodes
       const visibleNodes = projectedNodes.filter(n => n.visible);
-
-      // Sort by Z to render back-to-front
       visibleNodes.sort((a, b) => b.z - a.z);
 
-      // Draw connections
       ctx.lineWidth = 1.5;
       for (let i = 0; i < visibleNodes.length; i++) {
         for (let j = i + 1; j < visibleNodes.length; j++) {
           const dx = visibleNodes[i].original.x - visibleNodes[j].original.x;
           const dy = visibleNodes[i].original.y - visibleNodes[j].original.y;
           const dz = visibleNodes[i].original.z - visibleNodes[j].original.z;
-          // Calculate distance in 3D space based on current radius
           const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
           
-          // Max connection distance scales with the current radius so it doesn't break when huge
           const dynamicMaxDist = MAX_CONNECTION_DISTANCE * (currentRadius / 120);
 
           if (distance < dynamicMaxDist) {
             const opacity = (1 - distance / dynamicMaxDist) * 0.8;
-            // Nodes close to camera (z ~ -300) are highly visible, far nodes fade out
             const zOpacity = Math.max(0, Math.min(1, (currentRadius + CAMERA_Z - visibleNodes[i].z) / (currentRadius * 2)));
             
             ctx.beginPath();
             ctx.moveTo(visibleNodes[i].x, visibleNodes[i].y);
             ctx.lineTo(visibleNodes[j].x, visibleNodes[j].y);
-            ctx.strokeStyle = `rgba(39, 230, 210, ${opacity * zOpacity})`;
+            ctx.strokeStyle = `rgba(39, 230, 210, ${opacity * zOpacity * connectionOpacityMultiplier})`;
             ctx.stroke();
           }
         }
       }
 
-      // Draw nodes
       visibleNodes.forEach((node) => {
-        // Prevent huge nodes when very close to camera
         const radius = Math.min(20, Math.max(1, 4 * node.scale));
-        
-        // Z-based opacity
         const opacity = Math.max(0, Math.min(1, (currentRadius + CAMERA_Z - node.z) / (currentRadius * 2)));
 
-        // Subtle premium smooth radial gradient glow
-        const glowRadius = radius * 2.5;
+        // When dispersed, nodes glow brighter
+        const extraGlow = (1 - easedAssembly) * 0.5;
+        const glowRadius = radius * (2.5 + extraGlow * 2);
+        
         const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, glowRadius);
-        gradient.addColorStop(0, `rgba(255, 255, 255, ${opacity * 0.9})`); // Softer white core
-        gradient.addColorStop(0.3, `rgba(39, 230, 210, ${opacity * 0.4})`); // Subtle teal ring
-        gradient.addColorStop(1, `rgba(39, 230, 210, 0)`);                  // Smooth fade to transparent
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${Math.min(1, opacity * 0.9 + extraGlow)})`);
+        gradient.addColorStop(0.3, `rgba(39, 230, 210, ${opacity * 0.4})`);
+        gradient.addColorStop(1, `rgba(39, 230, 210, 0)`);
 
         ctx.beginPath();
         ctx.arc(node.x, node.y, glowRadius, 0, Math.PI * 2);
