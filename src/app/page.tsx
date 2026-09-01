@@ -125,7 +125,9 @@ export default function Home() {
           <div className="hidden md:flex gap-8 text-sm font-medium text-slate-300 absolute left-1/2 -translate-x-1/2 z-0">
             <a href="#philosophy" className="hover:text-primary transition-colors">Philosophy</a>
             <a href="#services" className="hover:text-primary transition-colors">What We Do</a>
+            <a href="#process" className="hover:text-primary transition-colors">Process</a>
             <a href="#team" className="hover:text-primary transition-colors">Team</a>
+            <a href="#why-us" className="hover:text-primary transition-colors">Why Us</a>
           </div>
           <motion.a 
             whileHover={{ scale: 1.05 }}
@@ -312,7 +314,7 @@ export default function Home() {
         </section>
 
         {/* Process Section */}
-        <section className="py-16 md:py-24 relative z-10 bg-transparent border-b border-white/5">
+        <section id="process" className="py-16 md:py-24 relative z-10 bg-transparent border-b border-white/5">
           <div className="max-w-7xl mx-auto px-6">
             <motion.h2 initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-3xl md:text-5xl font-extrabold mb-12 text-center text-white drop-shadow-xl">
               Our <span className="text-primary">Process</span>
@@ -416,7 +418,7 @@ export default function Home() {
         </section>
 
         {/* Why Choose Us */}
-        <section className="py-16 md:py-24 relative z-10 bg-transparent border-b border-white/5">
+        <section id="why-us" className="py-16 md:py-24 relative z-10 bg-transparent border-b border-white/5">
           <div className="max-w-6xl mx-auto px-6">
             <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true }} className="text-center mb-12">
               <motion.h2 variants={textReveal} className="text-3xl md:text-5xl font-extrabold mb-4 text-white drop-shadow-xl">
