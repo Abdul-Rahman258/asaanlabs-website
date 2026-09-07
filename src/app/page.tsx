@@ -664,10 +664,20 @@ export default function Home() {
               <a href="#services" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit">What We Do</a>
               <a href="#team" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit">Team</a>
               <a href="#contact" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit">Contact Us</a>
+            </div>
 
-              {/* Follow Our Pages */}
-              <div className="pt-2 flex flex-col gap-2">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Follow our pages</span>
+            {/* Connect & Follow Our Pages */}
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-3">
+                <h4 className="text-white font-bold mb-2">Connect</h4>
+                <a href="mailto:contact.asaanlabs@gmail.com" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
+                  contact.asaanlabs@gmail.com
+                </a>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <h4 className="text-white font-bold mb-2">Follow Our Pages</h4>
                 <div className="flex items-center gap-3">
                   <a 
                     href="#" 
@@ -689,15 +699,6 @@ export default function Home() {
                   </a>
                 </div>
               </div>
-            </div>
-
-            {/* Contact */}
-            <div className="flex flex-col gap-3">
-              <h4 className="text-white font-bold mb-2">Connect</h4>
-              <a href="mailto:contact.asaanlabs@gmail.com" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                contact.asaanlabs@gmail.com
-              </a>
             </div>
           </div>
           
