@@ -2,11 +2,31 @@
 
 import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, Variants, AnimatePresence } from "framer-motion";
-import { ArrowRight, Bot, Cpu, LineChart, Mail, Sparkles, Smartphone, Globe, MonitorSmartphone, Brain, LayoutTemplate, ChevronLeft, ChevronRight, Search, Lightbulb, PenTool, Code, Rocket, RefreshCw, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Bot, Cpu, LineChart, Mail, Sparkles, Smartphone, Globe, MonitorSmartphone, Brain, LayoutTemplate, ChevronLeft, ChevronRight, Search, Lightbulb, PenTool, Code, Rocket, RefreshCw, CheckCircle2, Menu, X } from "lucide-react";
 import Image from "next/image";
 import NeuralBackground from "../components/NeuralBackground";
 import NeuralSphere from "../components/NeuralSphere";
 import FloatingContact from "../components/FloatingContact";
+
+function LinkedinIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
+
+function InstagramIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  );
+}
 
 // Animation Variants
 const staggerContainer: Variants = {
@@ -30,6 +50,7 @@ const cardVariant: Variants = {
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const servicesList = [
     {
@@ -115,14 +136,30 @@ export default function Home() {
         transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.5 }}
         className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
       >
-        <div className="absolute inset-0 bg-[#0a0f1c]/40 backdrop-blur-2xl [mask-image:linear-gradient(to_bottom,black_50%,transparent)]" />
-        <div className="max-w-7xl mx-auto px-6 h-24 pt-4 flex items-center justify-between relative pointer-events-auto">
-          <a href="#" className="flex items-center gap-3 relative z-10 hover:opacity-80 transition-opacity">
-            <Image src="/AsaanLabsLogoOnly.svg" alt="Asaan Labs Logo" width={40} height={40} className="rounded-md" />
-            <span className="text-xl font-black tracking-widest text-foreground">
-              ASAAN <span className="font-light text-slate-400">LABS</span>
-            </span>
-          </a>
+        <div className="absolute inset-0 bg-[#0a0f1c]/60 backdrop-blur-2xl [mask-image:linear-gradient(to_bottom,black_60%,transparent)]" />
+        <div className="max-w-7xl mx-auto px-6 h-20 md:h-24 pt-2 md:pt-4 flex items-center justify-between relative pointer-events-auto">
+          {/* Left: Mobile Hamburger Beside Logo & Company Logo (Name hidden on phone format) */}
+          <div className="flex items-center gap-3 relative z-10">
+            {/* Hamburger Button: Phone only */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 active:scale-95 transition-all focus:outline-none"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5 text-primary" /> : <Menu className="w-5 h-5" />}
+            </button>
+
+            {/* Company Logo & Brand Name */}
+            <a href="#" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <Image src="/AsaanLabsLogoOnly.svg" alt="Asaan Labs Logo" width={38} height={38} className="rounded-md" />
+              {/* Name hidden on mobile phone, shown only on laptop/desktop */}
+              <span className="hidden md:inline-block text-xl font-black tracking-widest text-foreground">
+                ASAAN <span className="font-light text-slate-400">LABS</span>
+              </span>
+            </a>
+          </div>
+
+          {/* Middle: Desktop links only (hidden on mobile) */}
           <div className="hidden md:flex gap-8 text-sm font-medium text-slate-300 absolute left-1/2 -translate-x-1/2 z-0">
             <a href="#philosophy" className="hover:text-primary transition-colors drop-shadow-md">Philosophy</a>
             <a href="#services" className="hover:text-primary transition-colors drop-shadow-md">What We Do</a>
@@ -130,15 +167,83 @@ export default function Home() {
             <a href="#team" className="hover:text-primary transition-colors drop-shadow-md">Team</a>
             <a href="#why-us" className="hover:text-primary transition-colors drop-shadow-md">Why Us</a>
           </div>
+
+          {/* Right: Only Get Started button */}
           <motion.a 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             href="#contact" 
-            className="px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-full shadow-[0_0_15px_rgba(39,176,166,0.3)] hover:shadow-[0_0_25px_rgba(39,176,166,0.5)] transition-all"
+            className="px-5 md:px-6 py-2 md:py-2.5 bg-primary text-white text-xs md:text-sm font-semibold rounded-full shadow-[0_0_15px_rgba(39,176,166,0.3)] hover:shadow-[0_0_25px_rgba(39,176,166,0.5)] transition-all relative z-10"
           >
             Get Started
           </motion.a>
         </div>
+
+        {/* Mobile Hamburger Drawer Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden border-b border-white/10 bg-[#0a0f1c]/95 backdrop-blur-3xl px-6 py-6 shadow-2xl pointer-events-auto"
+            >
+              <div className="flex flex-col gap-3 text-base font-medium text-slate-200">
+                <a 
+                  href="#philosophy" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-2.5 px-3 rounded-xl hover:bg-white/5 hover:text-primary transition-colors flex items-center justify-between"
+                >
+                  Philosophy
+                  <ArrowRight className="w-4 h-4 opacity-50" />
+                </a>
+                <a 
+                  href="#services" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-2.5 px-3 rounded-xl hover:bg-white/5 hover:text-primary transition-colors flex items-center justify-between"
+                >
+                  What We Do
+                  <ArrowRight className="w-4 h-4 opacity-50" />
+                </a>
+                <a 
+                  href="#process" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-2.5 px-3 rounded-xl hover:bg-white/5 hover:text-primary transition-colors flex items-center justify-between"
+                >
+                  Process
+                  <ArrowRight className="w-4 h-4 opacity-50" />
+                </a>
+                <a 
+                  href="#team" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-2.5 px-3 rounded-xl hover:bg-white/5 hover:text-primary transition-colors flex items-center justify-between"
+                >
+                  Team
+                  <ArrowRight className="w-4 h-4 opacity-50" />
+                </a>
+                <a 
+                  href="#why-us" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-2.5 px-3 rounded-xl hover:bg-white/5 hover:text-primary transition-colors flex items-center justify-between"
+                >
+                  Why Us
+                  <ArrowRight className="w-4 h-4 opacity-50" />
+                </a>
+                <div className="pt-2 border-t border-white/10">
+                  <a 
+                    href="#contact" 
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-2.5 px-3 rounded-xl text-primary font-semibold hover:bg-primary/10 transition-colors flex items-center justify-between"
+                  >
+                    Contact Us
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.nav>
 
       <main className="flex-1 pt-32 relative z-10">
@@ -463,7 +568,7 @@ export default function Home() {
             >
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(39,176,166,0.08)_0%,transparent_70%)] pointer-events-none" />
                <motion.h2 variants={textReveal} className="text-3xl md:text-4xl font-extrabold mb-4 text-white relative z-10">
-                 Ready to automate your future?
+                 How can we help you?
                </motion.h2>
                <motion.p variants={textReveal} className="text-slate-300 mb-8 max-w-xl mx-auto relative z-10 text-base md:text-lg leading-relaxed">
                  Let's discuss how Asaan Labs can integrate tailored AI solutions to streamline your operations and exponentially increase your capabilities.
@@ -491,7 +596,7 @@ export default function Home() {
                  />
                  <textarea 
                    name="message" 
-                   placeholder="How can we automate your workflow?" 
+                   placeholder="How can we help you?" 
                    required 
                    rows={3}
                    className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all resize-none"
@@ -537,6 +642,31 @@ export default function Home() {
               <a href="#services" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit">What We Do</a>
               <a href="#team" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit">Team</a>
               <a href="#contact" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit">Contact Us</a>
+
+              {/* Follow Our Pages */}
+              <div className="pt-2 flex flex-col gap-2">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Follow our pages</span>
+                <div className="flex items-center gap-3">
+                  <a 
+                    href="#" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/50 hover:bg-primary/10 transition-all shadow-sm" 
+                    aria-label="LinkedIn"
+                  >
+                    <LinkedinIcon className="w-4 h-4" />
+                  </a>
+                  <a 
+                    href="#" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/50 hover:bg-primary/10 transition-all shadow-sm" 
+                    aria-label="Instagram"
+                  >
+                    <InstagramIcon className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
             </div>
 
             {/* Contact */}
