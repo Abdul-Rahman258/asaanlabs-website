@@ -138,18 +138,8 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-[#0a0f1c]/60 backdrop-blur-2xl [mask-image:linear-gradient(to_bottom,black_60%,transparent)]" />
         <div className="max-w-7xl mx-auto px-6 h-20 md:h-24 pt-2 md:pt-4 flex items-center justify-between relative pointer-events-auto">
-          {/* Left: Mobile Hamburger Beside Logo & Company Logo (Name hidden on phone format) */}
+          {/* Left: Company Logo (Name hidden on mobile, shown on laptop/desktop) */}
           <div className="flex items-center gap-3 relative z-10">
-            {/* Hamburger Button: Phone only */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 active:scale-95 transition-all focus:outline-none"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5 text-primary" /> : <Menu className="w-5 h-5" />}
-            </button>
-
-            {/* Company Logo & Brand Name */}
             <a href="#" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
               <Image src="/AsaanLabsLogoOnly.svg" alt="Asaan Labs Logo" width={38} height={38} className="rounded-md" />
               {/* Name hidden on mobile phone, shown only on laptop/desktop */}
@@ -168,15 +158,27 @@ export default function Home() {
             <a href="#why-us" className="hover:text-primary transition-colors drop-shadow-md">Why Us</a>
           </div>
 
-          {/* Right: Only Get Started button */}
-          <motion.a 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href="#contact" 
-            className="px-5 md:px-6 py-2 md:py-2.5 bg-primary text-white text-xs md:text-sm font-semibold rounded-full shadow-[0_0_15px_rgba(39,176,166,0.3)] hover:shadow-[0_0_25px_rgba(39,176,166,0.5)] transition-all relative z-10"
-          >
-            Get Started
-          </motion.a>
+          {/* Right: Desktop Get Started button & Mobile Hamburger button (all the way to the right) */}
+          <div className="flex items-center gap-3 relative z-10">
+            {/* Desktop Get Started button */}
+            <motion.a 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="#contact" 
+              className="hidden md:inline-flex px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-full shadow-[0_0_15px_rgba(39,176,166,0.3)] hover:shadow-[0_0_25px_rgba(39,176,166,0.5)] transition-all"
+            >
+              Get Started
+            </motion.a>
+
+            {/* Mobile Hamburger button: all the way to the right */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 active:scale-95 transition-all focus:outline-none"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6 text-primary" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Hamburger Drawer Menu */}
@@ -230,15 +232,26 @@ export default function Home() {
                   Why Us
                   <ArrowRight className="w-4 h-4 opacity-50" />
                 </a>
-                <div className="pt-2 border-t border-white/10">
-                  <a 
+                <a 
+                  href="#contact" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-2.5 px-3 rounded-xl hover:bg-white/5 hover:text-primary transition-colors flex items-center justify-between"
+                >
+                  Contact Us
+                  <ArrowRight className="w-4 h-4 opacity-50" />
+                </a>
+
+                {/* Get Started inside mobile hamburger */}
+                <div className="pt-3 border-t border-white/10 mt-1">
+                  <motion.a 
+                    whileTap={{ scale: 0.98 }}
                     href="#contact" 
                     onClick={() => setMobileMenuOpen(false)}
-                    className="py-2.5 px-3 rounded-xl text-primary font-semibold hover:bg-primary/10 transition-colors flex items-center justify-between"
+                    className="w-full py-3 bg-primary text-white text-sm font-semibold rounded-xl shadow-[0_0_20px_rgba(39,176,166,0.3)] hover:shadow-[0_0_30px_rgba(39,176,166,0.5)] transition-all flex items-center justify-center gap-2"
                   >
-                    Contact Us
+                    Get Started
                     <ArrowRight className="w-4 h-4" />
-                  </a>
+                  </motion.a>
                 </div>
               </div>
             </motion.div>
@@ -589,7 +602,7 @@ export default function Home() {
                    <input 
                      type="text" 
                      name="name" 
-                     placeholder="John Doe" 
+                     placeholder="e.g Muhammad Khan" 
                      required 
                      className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all"
                    />
@@ -603,7 +616,7 @@ export default function Home() {
                    <input 
                      type="email" 
                      name="email" 
-                     placeholder="johndoe@asaanlabs.com" 
+                     placeholder="name@gmail.com" 
                      required 
                      className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all"
                    />
@@ -616,7 +629,7 @@ export default function Home() {
                    </label>
                    <textarea 
                      name="message" 
-                     placeholder="your message/request here" 
+                     placeholder="How can we help u" 
                      required 
                      rows={3}
                      className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all resize-none"
