@@ -580,32 +580,54 @@ export default function Home() {
                  className="flex flex-col gap-4 max-w-md mx-auto relative z-10 text-left"
                >
                  <input type="hidden" name="access_key" value="d208c3a4-1e3f-4f94-a662-e99c4d038e37" />
-                 <input 
-                   type="text" 
-                   name="name" 
-                   placeholder="Your Name" 
-                   required 
-                   className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all"
-                 />
-                 <input 
-                   type="email" 
-                   name="email" 
-                   placeholder="Your Email" 
-                   required 
-                   className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all"
-                 />
-                 <textarea 
-                   name="message" 
-                   placeholder="How can we help you?" 
-                   required 
-                   rows={3}
-                   className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all resize-none"
-                 />
+                 
+                 {/* Name Field */}
+                 <div className="flex flex-col gap-1.5">
+                   <label className="text-xs md:text-sm font-semibold text-slate-300 flex items-center gap-1">
+                     Your Name <span className="text-red-500 font-bold">*</span>
+                   </label>
+                   <input 
+                     type="text" 
+                     name="name" 
+                     placeholder="John Doe" 
+                     required 
+                     className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all"
+                   />
+                 </div>
+
+                 {/* Email Field */}
+                 <div className="flex flex-col gap-1.5">
+                   <label className="text-xs md:text-sm font-semibold text-slate-300 flex items-center gap-1">
+                     Your Email <span className="text-red-500 font-bold">*</span>
+                   </label>
+                   <input 
+                     type="email" 
+                     name="email" 
+                     placeholder="johndoe@asaanlabs.com" 
+                     required 
+                     className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all"
+                   />
+                 </div>
+
+                 {/* Message Field */}
+                 <div className="flex flex-col gap-1.5">
+                   <label className="text-xs md:text-sm font-semibold text-slate-300 flex items-center gap-1">
+                     Your Message <span className="text-red-500 font-bold">*</span>
+                   </label>
+                   <textarea 
+                     name="message" 
+                     placeholder="your message/request here" 
+                     required 
+                     rows={3}
+                     className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all resize-none"
+                   />
+                 </div>
+
                  <motion.button 
                    whileHover={{ scale: 1.02 }}
                    whileTap={{ scale: 0.98 }}
                    type="submit"
-                   className="w-full py-3 mt-2 bg-primary text-white font-bold text-base rounded-xl shadow-[0_0_20px_rgba(39,176,166,0.3)] hover:shadow-[0_0_30px_rgba(39,176,166,0.5)] transition-all flex items-center justify-center gap-2"
+                   className="w-full py-3 mt-2 bg-primary text-white font-bold text-base rounded-xl shadow-[0_0_20px_rgba(39,176,166,0.3)] hover:shadow-[0_0_30px_rgba(39,176,166,0.5)] transition-all flex items-center justify-center gap-2 cursor-pointer"
                  >
                    <Mail className="w-4 h-4" />
                    Send Message
