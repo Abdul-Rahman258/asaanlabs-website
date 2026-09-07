@@ -581,7 +581,7 @@ export default function Home() {
             >
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(39,176,166,0.08)_0%,transparent_70%)] pointer-events-none" />
                <motion.h2 variants={textReveal} className="text-3xl md:text-4xl font-extrabold mb-4 text-white relative z-10">
-                 How can we help you?
+                 How can I help you?
                </motion.h2>
                <motion.p variants={textReveal} className="text-slate-300 mb-8 max-w-xl mx-auto relative z-10 text-base md:text-lg leading-relaxed">
                  Let's discuss how Asaan Labs can integrate tailored AI solutions to streamline your operations and exponentially increase your capabilities.
@@ -629,7 +629,7 @@ export default function Home() {
                    </label>
                    <textarea 
                      name="message" 
-                     placeholder="How can we help u" 
+                     placeholder="How can I help you?" 
                      required 
                      rows={3}
                      className="w-full px-5 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm md:text-base text-white placeholder:text-slate-500 transition-all resize-none"

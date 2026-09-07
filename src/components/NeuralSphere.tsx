@@ -207,7 +207,7 @@ export default function NeuralSphere({ scrollYProgress }: NeuralSphereProps) {
       addSection('process', 4);    // Process -> Upside down funnel (Tornado)
       addSection('team', 5);       // Team -> 3 Mushed balls (Clusters)
       addSection('why-us', 2);     // Why Choose Us -> DNA
-      addSection('contact', 6);    // How Can We Help You? -> Handshake/Bridge
+      addSection('contact', 6);    // How Can I Help You? -> Handshake/Bridge
       
       const footer = document.querySelector('footer');
       if (footer) {
