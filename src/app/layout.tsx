@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     google: "add-your-google-site-verification-here",
     yandex: "yandex-verification", 
     other: {
-      me: ['contact.asaanlabs@gmail.com'],
+      me: ['info.asaanlabs@gmail.com'],
     },
   }
 };

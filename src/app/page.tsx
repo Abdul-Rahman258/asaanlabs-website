@@ -683,9 +683,9 @@ export default function Home() {
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-3">
                 <h4 className="text-white font-bold mb-2">Connect</h4>
-                <a href="mailto:contact.asaanlabs@gmail.com" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit flex items-center gap-2">
+                <a href="mailto:info.asaanlabs@gmail.com" className="text-slate-400 hover:text-primary transition-colors text-sm w-fit flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  contact.asaanlabs@gmail.com
+                  info.asaanlabs@gmail.com
                 </a>
               </div>
 
