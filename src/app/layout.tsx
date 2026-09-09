@@ -69,8 +69,17 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/AsaanLabsLogoOnly.svg",
-    apple: "/AsaanLabsLogoOnly.svg",
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+      { url: '/AsaanLabsLogoOnly.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
   },
   verification: {
     google: "add-your-google-site-verification-here",
