@@ -1,0 +1,199 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/buttons/**",
+              "components/forms/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Plus Jakarta Sans|Inter))/i]",
+        "message": "Font not provided by the design system. Available: Plus Jakarta Sans, Inter."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|size|disabled|onClick|children|key|ref|className|style|children)$/]",
+        "message": "<Button> doesn't accept that prop. Declared props: variant, size, disabled, onClick, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:primary|secondary|ghost)$/]",
+        "message": "<Button> variant must be one of 'primary' | 'secondary' | 'ghost'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|md)$/]",
+        "message": "<Button> size must be one of 'sm' | 'md'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Input'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|placeholder|helper|value|onChange|disabled|key|ref|className|style|children)$/]",
+        "message": "<Input> doesn't accept that prop. Declared props: label, placeholder, helper, value, onChange, disabled."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Button": {
+        "replaces": []
+      },
+      "Input": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--accent",
+      "--accent-hover",
+      "--accent-on",
+      "--bg-base",
+      "--border-control",
+      "--border-subtle",
+      "--brand-gradient",
+      "--brand-gradient-end",
+      "--brand-gradient-start",
+      "--cyan-400",
+      "--focus-ring",
+      "--font-body",
+      "--font-heading",
+      "--leading-body",
+      "--leading-heading",
+      "--leading-snug",
+      "--leading-tight",
+      "--logo-neutral",
+      "--navy-950",
+      "--radius-control",
+      "--slate-400",
+      "--slate-800",
+      "--teal-400",
+      "--teal-500",
+      "--text-body",
+      "--text-body-lg",
+      "--text-body-lg-mobile",
+      "--text-body-mobile",
+      "--text-body-sm",
+      "--text-button",
+      "--text-caption",
+      "--text-display",
+      "--text-display-mobile",
+      "--text-h1",
+      "--text-h1-mobile",
+      "--text-h2",
+      "--text-h2-mobile",
+      "--text-h3",
+      "--text-h3-mobile",
+      "--text-h4",
+      "--text-h4-mobile",
+      "--text-label",
+      "--text-primary",
+      "--text-secondary",
+      "--text-section-title",
+      "--text-section-title-mobile",
+      "--tracking-body",
+      "--tracking-display",
+      "--tracking-h1",
+      "--tracking-h2",
+      "--tracking-h3",
+      "--tracking-h4",
+      "--weight-bold",
+      "--weight-extrabold",
+      "--weight-medium",
+      "--weight-regular",
+      "--weight-semibold",
+      "--white"
+    ],
+    "tokenKinds": {
+      "--navy-950": "color",
+      "--white": "color",
+      "--slate-400": "color",
+      "--slate-800": "color",
+      "--teal-500": "color",
+      "--teal-400": "color",
+      "--cyan-400": "color",
+      "--logo-neutral": "color",
+      "--bg-base": "color",
+      "--text-primary": "font",
+      "--text-secondary": "font",
+      "--border-subtle": "color",
+      "--border-control": "color",
+      "--accent": "color",
+      "--accent-hover": "color",
+      "--accent-on": "color",
+      "--brand-gradient-start": "color",
+      "--brand-gradient-end": "color",
+      "--brand-gradient": "color",
+      "--focus-ring": "color",
+      "--font-heading": "font",
+      "--font-body": "font",
+      "--text-display": "font",
+      "--text-display-mobile": "font",
+      "--text-h1": "font",
+      "--text-h1-mobile": "font",
+      "--text-h2": "font",
+      "--text-h2-mobile": "font",
+      "--text-h3": "font",
+      "--text-h3-mobile": "font",
+      "--text-h4": "font",
+      "--text-h4-mobile": "font",
+      "--text-section-title": "font",
+      "--text-section-title-mobile": "font",
+      "--text-body-lg": "font",
+      "--text-body-lg-mobile": "font",
+      "--text-body": "font",
+      "--text-body-mobile": "font",
+      "--text-body-sm": "font",
+      "--text-label": "font",
+      "--text-button": "font",
+      "--text-caption": "font",
+      "--weight-regular": "font",
+      "--weight-medium": "font",
+      "--weight-semibold": "font",
+      "--weight-bold": "font",
+      "--weight-extrabold": "font",
+      "--leading-tight": "font",
+      "--leading-snug": "font",
+      "--leading-heading": "font",
+      "--leading-body": "font",
+      "--tracking-display": "font",
+      "--tracking-h1": "font",
+      "--tracking-h2": "font",
+      "--tracking-h3": "font",
+      "--tracking-h4": "font",
+      "--tracking-body": "font",
+      "--radius-control": "radius"
+    },
+    "fontFamilies": [
+      "Inter",
+      "Plus Jakarta Sans"
+    ]
+  }
+}
