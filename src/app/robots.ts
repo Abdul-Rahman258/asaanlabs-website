@@ -1,12 +1,12 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/private/'],
+      userAgent: "*",
+      allow: "/",
     },
-    sitemap: 'https://asaanlabs.tech/sitemap.xml',
+    sitemap: "https://www.asaanlabs.tech/sitemap.xml",
+    host: "https://www.asaanlabs.tech",
   };
 }
